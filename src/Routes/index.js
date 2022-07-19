@@ -10,7 +10,7 @@ function Routes() {
         <Switch>
             <Route exact path="/" component={SingIn} />
             <Route exact path="/register" component={SingUp} />
-            <Route exact path="/dashboard" isPrivate={true} component={Dashboard} />
+            <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
     )
 }
