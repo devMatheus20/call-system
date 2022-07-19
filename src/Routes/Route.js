@@ -1,3 +1,5 @@
+import React, { useContext } from 'react'
+import { AuthContext } from '../Context/auth'
 import { Route, Redirect } from 'react-router-dom'
 
 function RouteWrapper({
@@ -6,29 +8,28 @@ function RouteWrapper({
     ...rest
 }) {
 
-    const loading = false
-    const singed = false
+    const { singed, loading } = useContext(AuthContext)
 
-    if(loading) {
+    if (loading) {
         return (
-            <div>1</div>
+            <div></div>
         )
     }
 
-    if(!singed && isPrivate) {
+    if (!singed && isPrivate) {
         return (
             <Redirect to="/" />
         )
     }
 
-    if(singed && isPrivate) {
+    if (singed && isPrivate) {
         return (
             <Redirect to="/dashboard" />
         )
     }
 
 
-    return <Route {...rest} render={props => <Component {...props}/>}/>
+    return <Route {...rest} render={props => <Component {...props} />} />
 }
 
 export default RouteWrapper
