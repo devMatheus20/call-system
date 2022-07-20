@@ -3,20 +3,22 @@ import { AuthContext } from '../../Context/auth'
 import { Link } from 'react-router-dom'
 import './styles.css'
 
+import { FaSpinner } from 'react-icons/fa'
+
 function SingUp() {
 
-    const { singUp } = useContext(AuthContext)
+    const { singUp, loadingAuth } = useContext(AuthContext)
 
     const emailRef = useRef()
     const passwordRef = useRef()
     const nameRef = useRef()
 
-    function click() {
+    function clickRegister() {
         const email = emailRef.current.value
         const password = passwordRef.current.value
         const name = nameRef.current.value
 
-        if(email !== '' && password !== '' && name !== '') singUp(email, password, name)
+        if (email !== '' && password !== '' && name !== '') singUp(email, password, name)
     }
 
     return (
@@ -28,7 +30,13 @@ function SingUp() {
                 <input placeholder='Email' type="email" ref={emailRef} />
                 <input placeholder='Senha' type="password" ref={passwordRef} />
 
-                <button onClick={click} type='submit'>Criar conta</button>
+                <button onClick={clickRegister} type='submit'>
+                    {loadingAuth ?
+                        <FaSpinner size={20}/>
+                        :
+                        'Criar conta'
+                    }
+                </button>
 
                 <p>Você já possui uma conta? <Link to="/"><span>Entrar</span></Link></p>
             </article>

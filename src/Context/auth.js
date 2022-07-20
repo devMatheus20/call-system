@@ -60,7 +60,7 @@ function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, loading, singUp }}>
+        <AuthContext.Provider value={{ singed: !!user, user, loading, loadingAuth, singUp }}>
             {children}
         </AuthContext.Provider>
     )
