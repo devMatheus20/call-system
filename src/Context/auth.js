@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react'
 import firebase from '../Services/firebaseConnection'
 
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({})    
 
 function AuthProvider({ children }) {
 
@@ -23,10 +23,44 @@ function AuthProvider({ children }) {
         }
 
         loadStorage()
-    })
+    }, [])
+
+    async function singUp(email, password, name) {
+        setLoadingAuth(true)
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+
+            .then(async ({ user }) => {
+                await firebase.firestore().collection('users').doc(user.uid).set({
+                    nome: name,
+                    avatarUrl: null
+                })
+
+                .then(() => {
+                    let data = {
+                        uid: user.uid,
+                        nome: name,
+                        email: user.email,
+                        avatarUrl: null
+                    }
+
+                    setUser(data)
+                    storageUser(data)
+                    setLoadingAuth(false)
+                })
+            })
+
+            .catch(error => {
+                console.log(error)
+                setLoadingAuth(false)
+            })
+    }
+
+    function storageUser(data) {
+        localStorage.setItem('SistemaUser' ,JSON.stringify(data))
+    }
 
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, loading }}>
+        <AuthContext.Provider value={{ singed: !!user, user, loading, singUp }}>
             {children}
         </AuthContext.Provider>
     )

@@ -63,5 +63,6 @@
 }
 
 .singUp p span {
-    color: blue;
+    color: #FFD700;
+    opacity: 0.7;
 }
