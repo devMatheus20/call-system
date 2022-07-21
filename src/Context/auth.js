@@ -25,6 +25,33 @@ function AuthProvider({ children }) {
         loadStorage()
     }, [])
 
+    async function singIn(email, password) {
+        setLoadingAuth(true)
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+
+        .then(async ( {user} ) => {
+            setLoadingAuth(false)
+
+            const userProfile = await firebase.firestore().collection('users').doc(user.uid).get()
+
+            let data = {
+                uid: userProfile.uid,
+                nome: userProfile.data().nome,
+                email:  userProfile.data().email,
+                avatarUrl: null
+            }
+
+            setUser(data)
+            storageUser(data)
+            setLoadingAuth(false)
+        })
+
+        .catch(error => {
+            console.log(error)
+            setLoadingAuth(false)
+        })
+    }
+
     async function singUp(email, password, name) {
         setLoadingAuth(true)
         await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -60,7 +87,7 @@ function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, loading, loadingAuth, singUp }}>
+        <AuthContext.Provider value={{ singed: !!user, user, loading, loadingAuth, singUp, singIn }}>
             {children}
         </AuthContext.Provider>
     )

@@ -7,6 +7,8 @@ import { FaSpinner } from 'react-icons/fa'
 
 function SingUp() {
 
+    localStorage.removeItem('SistemaUser')
+
     const { singUp, loadingAuth } = useContext(AuthContext)
 
     const emailRef = useRef()

@@ -50,7 +50,7 @@
     cursor: pointer;
 }
 
-.s-singUp svg {
+.singUp svg {
    animation: animateLoad 1.3s infinite;
 }
 

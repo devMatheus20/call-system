@@ -56,6 +56,10 @@
     opacity: 0.8;
 }
 
+.singIn svg {
+    animation: animateLoad 1.3s infinite;
+ }
+
 .singIn p {
     font-size: 13px;
     margin-top: 20px;
@@ -67,3 +71,12 @@
     opacity: 0.7;
 }
 
+@keyframes animateLoad {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
