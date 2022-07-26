@@ -13,7 +13,9 @@ function SingIn() {
 
     const {singIn, loadingAuth} = useContext(AuthContext)
 
-    function clickLogin() {
+    function clickLogin(event) {
+        event.preventDefault()
+        
         const email = emailRef.current.value
         const password = passwordRef.current.value
 
@@ -22,13 +24,13 @@ function SingIn() {
 
     return (
         <section className='s-singIn'>
-            <article className='singIn'>
+            <form onSubmit={clickLogin} className='singIn'>
                 <h1>Entrar</h1>
 
-                <input placeholder='Email' type="email" ref={emailRef} />
-                <input placeholder='Senha' type="password" ref={passwordRef}/>
+                <input placeholder='Email' type="email" ref={emailRef} autoComplete={"useremail"}/>
+                <input placeholder='Senha' type="password" ref={passwordRef}autoComplete={"current-password"} />
 
-                <button onClick={clickLogin} type='submit'>
+                <button type='submit'>
                     {loadingAuth ?
                         <FaSpinner size={20}/>
                         :
@@ -37,7 +39,7 @@ function SingIn() {
                 </button>
 
                 <p>Ainda não possui uma conta? <Link to="/register"><span>Criar uma conta</span></Link></p>
-            </article>
+            </form>
         </section>
     )
 }

@@ -15,7 +15,9 @@ function SingUp() {
     const passwordRef = useRef()
     const nameRef = useRef()
 
-    function clickRegister() {
+    function clickRegister(event) {
+        event.preventDefault()
+        
         const email = emailRef.current.value
         const password = passwordRef.current.value
         const name = nameRef.current.value
@@ -25,14 +27,14 @@ function SingUp() {
 
     return (
         <section className='s-singUp'>
-            <article className='singUp'>
+            <form onSubmit={clickRegister} className='singUp'>
                 <h1>Registro</h1>
 
-                <input placeholder='Seu Nome' type="text" ref={nameRef} />
-                <input placeholder='Email' type="email" ref={emailRef} />
+                <input placeholder='Seu Nome' type="text" ref={nameRef}/>
+                <input placeholder='Email' type="email" ref={emailRef} autoComplete={"current-password"}/>
                 <input placeholder='Senha' type="password" ref={passwordRef} />
 
-                <button onClick={clickRegister} type='submit'>
+                <button type='submit'>
                     {loadingAuth ?
                         <FaSpinner size={20}/>
                         :
@@ -41,7 +43,7 @@ function SingUp() {
                 </button>
 
                 <p>Você já possui uma conta? <Link to="/"><span>Entrar</span></Link></p>
-            </article>
+            </form>
         </section>
     )
 }

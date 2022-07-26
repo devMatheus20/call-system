@@ -6,6 +6,8 @@ function Dashboard() {
 
     async function logout(){
         await firebase.auth().signOut()
+
+        localStorage.removeItem("SistemaUser")
     }
 
     return(
