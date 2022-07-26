@@ -1,0 +1,9 @@
+.dashboard {
+    display: flex;
+}
+
+@media(max-width: 700px) {
+    .dashboard {
+        flex-direction: column;
+    }
+}

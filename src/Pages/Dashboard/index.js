@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import './styles.css'
 import firebase from '../../Services/firebaseConnection'
-
+import Header from '../../Components/Header'
 
 function Dashboard() {
 
-    async function logout(){
+    async function logout() {
         await firebase.auth().signOut()
 
         localStorage.removeItem("SistemaUser")
     }
 
-    return(
-        <div>
-            <h1>Dashboard teste</h1>
+    return (
+        <div className='dashboard'>
+            <Header />
 
-            <button onClick={logout}>Sair</button>
-    
+            <div>
+                <h1>Dashboard teste</h1>
+
+                <button onClick={logout}>Sair</button>
+            </div>
+
         </div>
-    )  
+    )
 }
 
 export default Dashboard
