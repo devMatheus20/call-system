@@ -22,6 +22,12 @@ function SingIn() {
         if(email !== '' && password !== '') singIn(email, password)
     }
 
+    // if(loadingAuth === true) {
+    //     return(
+    //         <div>Carregando...</div>
+    //     )
+    // }
+
     return (
         <section className='s-singIn'>
             <form onSubmit={clickLogin} className='singIn'>
