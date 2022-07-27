@@ -61,6 +61,7 @@ function AuthProvider({ children }) {
 
             .then(async ({ user }) => {
                 await firebase.firestore().collection('users').doc(user.uid).set({
+                    email: email,
                     nome: name,
                     avatarUrl: null
                 })
@@ -92,7 +93,7 @@ function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, loading, loadingAuth, singUp, singIn }}>
+        <AuthContext.Provider value={{ singed: !!user, user, setUser, loading, loadingAuth, singUp, singIn }}>
             {children}
         </AuthContext.Provider>
     )

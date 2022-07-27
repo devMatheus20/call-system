@@ -1,6 +1,10 @@
 import React, { useContext } from 'react'
 import './styles.css'
 import firebase from '../../Services/firebaseConnection'
+
+import { BiMessageDots } from 'react-icons/bi'
+
+import Title from '../../Components/Title'
 import Header from '../../Components/Header'
 
 function Dashboard() {
@@ -12,10 +16,15 @@ function Dashboard() {
     }
 
     return (
-        <div className='dashboard'>
+        <div className='container'>
             <Header />
 
-            <div>
+            <div className='calleds'>
+                <Title>
+                    <BiMessageDots color="#000" size={30}  />
+                    Chamados
+                </Title>
+
                 <h1>Dashboard teste</h1>
 
                 <button onClick={logout}>Sair</button>

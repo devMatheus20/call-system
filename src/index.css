@@ -10,3 +10,12 @@ html, body, #root {
   height: 100%;
 }
 
+.container {
+  display: flex;
+}
+
+.calleds, .customers, .profile {
+  background-color: #EFEFEF;
+  width: 100%;
+}
+

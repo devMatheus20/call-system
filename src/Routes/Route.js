@@ -24,7 +24,7 @@ function RouteWrapper({
 
     if (singed && !isPrivate) {
         return (
-            <Redirect to="/dashboard" />
+            <Redirect to="/profile" />
         )
     }
 

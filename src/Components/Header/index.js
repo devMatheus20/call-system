@@ -18,17 +18,17 @@ function Header() {
             </div>
 
             <div className="links">
-                <Link href="/dashboard">
+                <Link to="/dashboard">
                     <AiOutlineHome color="#fff" size={25}  />
                     <span>Chamados</span>
                 </Link>
 
-                <Link href="/customers">
+                <Link to="/customers">
                     <AiOutlineUser color="#fff" size={25}  />
                     <span>Clientes</span>
                 </Link>
 
-                <Link href="/profile">
+                <Link to="/profile">
                     <BsGear color="#fff" size={25} />
                     <span>Configurações</span>
                 </Link>
