@@ -5,7 +5,7 @@ import SingIn from "../Pages/SingIn";
 import SingUp from "../Pages/SingUp";
 import Dashboard from "../Pages/Dashboard";
 import Profile from "../Pages/Profile";
-import Customers from "../Pages/Customers";
+// import Customers from "../Pages/Customers";
 
 function Routes() {
     return(

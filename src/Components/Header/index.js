@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from '../../Context/auth'
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
 import { BsGear } from 'react-icons/bs'
-import Avatar from '../../Assets/user.png'
+import avatar from '../../Assets/user.png'
 
 
 function Header() {
@@ -14,7 +14,7 @@ function Header() {
     return (
         <header>
             <div className="imgUser">
-                <img src={user.avatarUrl === null ? Avatar : user.avatarUrl} alt="Imagem do Perfil" />
+                <img src={user.avatarUrl === null ? avatar : user.avatarUrl} alt="Imagem do Perfil" />
             </div>
 
             <div className="links">

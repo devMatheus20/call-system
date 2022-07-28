@@ -7,13 +7,19 @@
     border-radius: 6px;
 }
 
+.img-profile input {
+    display: none;
+}
+
 .img-profile img {
     position: relative;
     width: 250px;
+    height: 250px;
     margin: 50px 0 0 25px;
     border-radius: 50%;
     z-index: 100;
     cursor: pointer;
+    object-fit: cover;
 }
 
 .img-profile svg {
@@ -21,6 +27,7 @@
     bottom: 130px;
     right: 141px;
     z-index: 300;
+    cursor: pointer;
 }
 
 form {
