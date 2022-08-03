@@ -1,12 +1,3 @@
-.info-profile {
-    background-color: #F8F8F8;
-    display: flex;
-    flex-direction: column;
-    width: 97.5%;
-    margin: 0 auto;
-    border-radius: 6px;
-}
-
 .img-profile input {
     display: none;
 }
@@ -30,30 +21,28 @@
     cursor: pointer;
 }
 
-form {
+.form-profile {
     max-width: 48%;
     margin: 10px 0;
-    padding-left: 10px;
 }
 
-form label {
+.form-profile label {
     display: block;
     font-size: 20px;
-    color: #181C2E;
     margin-top: 15px;
 }
 
-form input {
+.form-profile input {
     display: block;
     width: 100%;
     padding: 9px;
     margin-top: 5px;
-    border: 1px solid #181C2E;
+    border: 1px solid #ccc;
     border-radius: 0.3rem;
     outline: none;
 }
 
-form button {
+.form-profile button {
     background-color: #181C2E;
     width: 100%;
     margin-top: 30px;
@@ -66,11 +55,11 @@ form button {
     cursor: pointer;
 }
 
-form button:hover {
+.form-profile button:hover {
     filter: brightness(1.5);
 }
 
-form button:active {
+.form-profile button:active {
     opacity: 0.9;
 }
 
@@ -92,8 +81,7 @@ form button:active {
     cursor: pointer;
 }
 
-
-
 .disabled {
     cursor: not-allowed;
 }
+

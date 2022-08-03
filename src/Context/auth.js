@@ -31,12 +31,13 @@ function AuthProvider({ children }) {
         await firebase.auth().signInWithEmailAndPassword(email, password)
 
         .then(async ( {user} ) => {
-            setLoadingAuth(false)
 
             const userProfile = await firebase.firestore().collection('users').doc(user.uid).get()
 
+            console.log(userProfile)
+
             let data = {
-                uid: userProfile.uid,
+                uid: userProfile.id,
                 nome: userProfile.data().nome,
                 email:  userProfile.data().email,
                 avatarUrl: null
@@ -92,8 +93,14 @@ function AuthProvider({ children }) {
         localStorage.setItem('SistemaUser' ,JSON.stringify(data))
     }
 
+    function logout() {
+        localStorage.removeItem('SistemaUser')
+        firebase.auth().signOut()
+        setUser(null)
+    }
+
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, setUser, storageUser, loading, loadingAuth, singUp, singIn }}>
+        <AuthContext.Provider value={{ singed: !!user, user, setUser, storageUser, loading, loadingAuth, singUp, singIn, logout }}>
             {children}
         </AuthContext.Provider>
     )

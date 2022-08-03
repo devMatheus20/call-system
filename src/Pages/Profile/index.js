@@ -14,7 +14,7 @@ import Header from '../../Components/Header'
 
 function Profile() {
 
-    const { user, setUser, storageUser } = useContext(AuthContext)
+    const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
     const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
     const [name, setName] = useState(user && user.nome)
@@ -41,6 +41,7 @@ function Profile() {
     }
 
     async function handleUpload() {
+
         const uploadTask = firebase.storage()
             .ref(`images/${user.uid}/${inputImage.name}`)
             .put(inputImage)
@@ -95,8 +96,6 @@ function Profile() {
         if (name !== '' && inputImage !== null) handleUpload()
     }
 
-
-
     return (
         <div className='container'>
             <Header />
@@ -118,7 +117,7 @@ function Profile() {
                         <MdOutlineUpload size={33} color="#ccc" />
                     </label>
 
-                    <form onSubmit={handleSave}>
+                    <form onSubmit={handleSave} className="form-profile">
                         <label>
                             Nome
                             <input defaultValue={name} onChange={(e) => setName(e.target.value)} />
@@ -136,7 +135,7 @@ function Profile() {
                 </div>
 
                 <div className='logout'>
-                    <button>
+                    <button onClick={logout}>
                         Sair
                     </button>
                 </div>

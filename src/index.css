@@ -19,3 +19,14 @@ html, body, #root {
   width: 100%;
 }
 
+.info-profile, .info-customers {
+  background-color: #F8F8F8;
+  display: flex;
+  flex-direction: column;
+  width: 97.5%;
+  margin: 0 auto;
+  border-radius: 6px;
+  padding-left: 11px;
+}
+
+

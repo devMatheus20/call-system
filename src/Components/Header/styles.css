@@ -19,6 +19,7 @@ header {
     width: 90px;
     padding: 30px 0;
     filter: drop-shadow(2px 3px 6px #121212);
+    border-radius: 50%;
 }
 
 .links {
