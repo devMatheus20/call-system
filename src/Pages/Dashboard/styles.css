@@ -3,6 +3,37 @@
     display: flex;
 }
 
+.info-calleds {
+    background-color: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 97.5%;
+    margin: 15px auto;
+    padding: 60px 0;
+}
+
+.info-calleds span {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.info-calleds button {
+    display: flex;
+    align-items: center;
+    background-color: #5FD204;
+    padding: 8px;
+    border: none;
+    border-radius: 0.3rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.info-calleds button:hover {
+    filter: brightness(1.1)
+}
+
 
 @media(max-width: 700px) {
     .dashboard {
