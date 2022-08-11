@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './styles.css'
 
 import { BiMessageDots } from 'react-icons/bi'
@@ -9,7 +10,7 @@ import Header from '../../Components/Header'
 
 function Dashboard() {
 
-    const [calleds, setCalleds] = useState([])
+    const [calleds, setCalleds] = useState([1])
 
     return (
         <div className='container'>
@@ -21,14 +22,24 @@ function Dashboard() {
                     Atendimentos
                 </Title>
 
-                {calleds.length === 0 &&
+                {calleds.length === 0 ?
                     <div className='info-calleds'>
                         <span>Nenhum chamado registrado...</span>
-                        <button>
+                        <Link to="/new" className='new'>
                             <HiPlusSm size={25} color="#fff" />
                             Novo chamado
-                        </button>
+                        </Link>
                     </div>
+
+                    :
+
+
+                    <Link to="/new" className='new'>
+                        <HiPlusSm size={25} color="#fff" />
+                        Novo chamado
+                    </Link>
+
+
                 }
             </div>
 

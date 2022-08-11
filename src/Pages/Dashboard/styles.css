@@ -19,18 +19,22 @@
     font-weight: 700;
 }
 
-.info-calleds button {
+.new {
+    background-color: #5FD204;
     display: flex;
     align-items: center;
-    background-color: #5FD204;
+    max-width: 150px;
     padding: 8px;
     border: none;
     border-radius: 0.3rem;
     color: #fff;
     cursor: pointer;
+    font-weight: 500;
+    float: right;
+    margin-right: 20px;
 }
 
-.info-calleds button:hover {
+.new:hover {
     filter: brightness(1.1)
 }
 
