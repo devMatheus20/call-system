@@ -1,0 +1,61 @@
+form {
+    margin: 10px 0 30px 0;
+    max-width: 46%;
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-size: 20px;
+    color: #181C2E;
+}
+
+form select {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    outline: none;
+}
+
+.stats-called {
+    display: flex;
+    gap: 30px;
+}
+
+.stats-called label {
+    display: flex;
+    gap: 5px;
+    font-size: 20px;
+}
+
+form button {
+    background-color: #181C2E;
+    width: 100%;
+    margin-top: 30px;
+    padding: 8px 0;
+    color: #fff;
+    border-radius: 0.3rem;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+form textarea {
+    display: block;
+    height: 120px;
+    width: 100%;
+    padding: 9px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    outline: none;
+    resize: none;
+}
+
+.margin {
+    margin: 30px 0;
+}

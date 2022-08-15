@@ -14,12 +14,12 @@ html, body, #root {
   display: flex;
 }
 
-.calleds, .customers, .profile {
+.calleds, .customers, .profile, .news-calleds {
   background-color: #EFEFEF;
   width: 100%;
 }
 
-.info-profile, .info-customers {
+.info-profile, .info-customers, .create-newCall {
   background-color: #F8F8F8;
   display: flex;
   flex-direction: column;

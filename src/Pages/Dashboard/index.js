@@ -25,7 +25,7 @@ function Dashboard() {
                 {calleds.length === 0 ?
                     <div className='info-calleds'>
                         <span>Nenhum chamado registrado...</span>
-                        <Link to="/new" className='new'>
+                        <Link to="/newcall" className='new'>
                             <HiPlusSm size={25} color="#fff" />
                             Novo chamado
                         </Link>
@@ -34,7 +34,7 @@ function Dashboard() {
                     :
 
 
-                    <Link to="/new" className='new'>
+                    <Link to="/newcall" className='new'>
                         <HiPlusSm size={25} color="#fff" />
                         Novo chamado
                     </Link>
