@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles.css'
 import firebase from '../../Services/firebaseConnection'
+import { toast } from 'react-toastify'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
@@ -8,6 +9,53 @@ import Title from '../../Components/Title'
 import Header from '../../Components/Header'
 
 function NewCall() {
+
+    const [nameCustomers, setNameCustomers] = useState([])
+
+    const [name, setName] = useState('Nome fantasia')
+    const [subject, setSubject] = useState('Suporte')
+    const [stats, setStats] = useState('Em aberto')
+    const [complement, setComplement] = useState('')
+
+ 
+    useEffect(() => {
+        async function fetchCustomers() {
+            await firebase.firestore().collection('customers').get()
+
+            .then((snapshot) => {
+                let customers = []
+
+                snapshot.forEach(doc => {
+                    customers.push(doc.data().NomeDaEmpresa)
+                })
+
+                setNameCustomers(customers)
+            })
+
+            .catch(error => console.log(error))
+        }   
+
+        fetchCustomers()
+    }, [])
+
+    async function handleRegister(e) {
+        e.preventDefault()
+        
+        if(name === 'Nome fantasia') {
+            toast.info("Escolha um cliente válido!")
+        }
+
+        await firebase.firestore().collection('calls').doc().set({
+            cliente: name,
+            assunto: subject,
+            status: stats,
+            complemento: complement ? complement : 'Complemento vazio'
+        }) 
+
+        .then(() => toast.success("Chamado criado com sucesso!"))
+
+        .catch(error => console.log(error))
+    }
 
 
     return (
@@ -21,20 +69,23 @@ function NewCall() {
                 </Title>
 
                 <div className='create-newCall'>
-                    <form>
+                    <form onSubmit={handleRegister}>
                         <label>
                             Cliente
-                            <select>
-                                <option>Teste 1</option>
-                                <option>Teste 2</option>
+                            <select onChange={(e) => setName(e.target.value)}>
+                                <option value="Nome fantasia">Nome fantasia</option>
+                                {nameCustomers.map(name =>
+                                    <option key={name} value={name}>{name}</option>
+                                )}
                             </select>
                         </label>
 
                         <label>
                             Assunto
-                            <select>
-                                <option>Teste 1</option>
-                                <option>Teste 2</option>
+                            <select onChange={(e) => setSubject(e.target.value)}>
+                                <option value='Suporte'>Suporte</option>
+                                <option value='Visita Técnica'>Visita Técnica</option>
+                                <option value='Financeiro'>Financeiro</option>
                             </select>
                         </label>
 
@@ -42,17 +93,17 @@ function NewCall() {
                             Status
                             <div className='stats-called'>
                                 <label>
-                                    <input type="radio" name='radio' value="Em aberto" checked={true}/>
+                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Em aberto" defaultChecked={true} />
                                     Em aberto
                                 </label>
 
                                 <label>
-                                    <input type="radio" name='radio' value="Progresso"/>
+                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Progresso"/>
                                     Progresso
                                 </label>
 
                                 <label>
-                                    <input type="radio" name='radio' value="Atendido"/>
+                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Atendido"/>
                                     Atendido
                                 </label>
                             </div>
@@ -60,7 +111,7 @@ function NewCall() {
 
                         <label>
                             Complemento
-                            <textarea placeholder='Descreva seu problema (opcional).'></textarea>
+                            <textarea onChange={(e) => setComplement(e.target.value)} placeholder='Descreva seu problema (opcional).'></textarea>
                         </label>
 
                         <button type='submit'>
