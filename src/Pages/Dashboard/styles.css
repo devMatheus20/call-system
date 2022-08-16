@@ -70,6 +70,10 @@ table th {
     text-transform: uppercase;
 }
 
+table td {
+    font-size: 14px;
+}
+
 .stats {
     background-color: #999999;
     padding: 3px;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles.css'
 import firebase from '../../Services/firebaseConnection'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
@@ -17,48 +18,50 @@ function NewCall() {
     const [stats, setStats] = useState('Em aberto')
     const [complement, setComplement] = useState('')
 
- 
+
     useEffect(() => {
         async function fetchCustomers() {
             await firebase.firestore().collection('customers').get()
 
-            .then((snapshot) => {
-                let customers = []
+                .then((snapshot) => {
+                    let customers = []
 
-                snapshot.forEach(doc => {
-                    customers.push(doc.data().NomeDaEmpresa)
+                    snapshot.forEach(doc => {
+                        customers.push(doc.data().NomeDaEmpresa)
+                    })
+
+                    setNameCustomers(customers)
                 })
 
-                setNameCustomers(customers)
-            })
-
-            .catch(error => console.log(error))
-        }   
+                .catch(error => console.log(error))
+        }
 
         fetchCustomers()
     }, [])
 
     async function handleRegister(e) {
         e.preventDefault()
-        
-        if(name === 'Nome fantasia') {
+
+        if (name === 'Nome fantasia') {
             toast.info("Escolha um cliente válido!")
         }
 
         await firebase.firestore().collection('calls').doc().set({
+            criadoEm: new Date().toLocaleDateString('UTC'),
             cliente: name,
             assunto: subject,
             status: stats,
             complemento: complement ? complement : 'Complemento vazio'
-        }) 
+        })
 
-        .then(() => toast.success("Chamado criado com sucesso!"))
+            .then(() => toast.success("Chamado criado com sucesso!"))
 
-        .catch(error => console.log(error))
+            .catch(error => console.log(error))
     }
 
 
     return (
+        console.log(name, stats, complement, subject),
         <div className='container'>
             <Header />
 
@@ -73,7 +76,7 @@ function NewCall() {
                         <label>
                             Cliente
                             <select onChange={(e) => setName(e.target.value)}>
-                                <option value="Nome fantasia">Nome fantasia</option>
+                                <option value={name}>{name}</option>
                                 {nameCustomers.map(name =>
                                     <option key={name} value={name}>{name}</option>
                                 )}
@@ -98,12 +101,12 @@ function NewCall() {
                                 </label>
 
                                 <label>
-                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Progresso"/>
+                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Progresso" />
                                     Progresso
                                 </label>
 
                                 <label>
-                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Atendido"/>
+                                    <input onClick={(e) => setStats(e.target.value)} type="radio" name='radio' value="Atendido" />
                                     Atendido
                                 </label>
                             </div>

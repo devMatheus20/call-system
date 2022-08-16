@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './styles.css'
+import firebase from '../../Services/firebaseConnection'
 
 import { BiMessageDots, BiSearch, BiEditAlt } from 'react-icons/bi'
 import { HiPlusSm } from 'react-icons/hi'
@@ -10,7 +11,32 @@ import Header from '../../Components/Header'
 
 function Dashboard() {
 
-    const [calleds, setCalleds] = useState([1])
+    const [calleds, setCalleds] = useState([])
+
+
+    useEffect(() => {
+        async function fetchCalleds() {
+            firebase.firestore().collection('calls').orderBy('criadoEm', 'asc')
+                .onSnapshot((snapshot) => {
+                    let calls = []
+
+                    snapshot.forEach((doc) => {
+                        calls.push({
+                            id: doc.id,
+                            created: doc.data().criadoEm,
+                            client: doc.data().cliente,
+                            subject: doc.data().assunto,
+                            stats: doc.data().status,
+                            complement: doc.data().complemento
+                        })
+                    })
+
+                    setCalleds(calls)
+                })
+        }
+
+        fetchCalleds()
+    }, [])
 
     return (
         <div className='container'>
@@ -40,37 +66,40 @@ function Dashboard() {
                     </Link>
                 }
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope='col'>Cliente</th>
-                            <th scope='col'>Assunto</th>
-                            <th scope='col'>Status</th>
-                            <th scope='col'>Cadastrado em</th>
-                            <th scope='col'>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Cliente">Sujeito</td>
-                            <td data-label="Assunto">Suporte</td>
-                            <td data-label="Status">
-                                <span className='stats'>Em aberto</span>
-                            </td>
-                            <td data-label="Cadastrado em">02/05/2022</td>
-                            <td data-label="#" className='actions'>
-                                <button className='search'>
-                                    <BiSearch color='#fff' size={20} />
-                                </button>
-                                <button className='edit'>
-                                    <BiEditAlt color='#fff' size={20} />
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                {calleds.length > 0 &&
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope='col'>Cliente</th>
+                                <th scope='col'>Assunto</th>
+                                <th scope='col'>Status</th>
+                                <th scope='col'>Cadastrado em</th>
+                                <th scope='col'>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {calleds.map((call) =>
+                                <tr key={call.id}>
+                                    <td data-label="Cliente">{call.client}</td>
+                                    <td data-label="Assunto">{call.subject}</td>
+                                    <td data-label="Status">
+                                        <span className='stats'>{call.stats}</span>
+                                    </td>
+                                    <td data-label="Cadastrado em">{call.created}</td>
+                                    <td data-label="#" className='actions'>
+                                        <button className='search'>
+                                            <BiSearch color='#fff' size={20} />
+                                        </button>
+                                        <button className='edit'>
+                                            <BiEditAlt color='#fff' size={20} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                }
             </div>
-
         </div>
     )
 }
