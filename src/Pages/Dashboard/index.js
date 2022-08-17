@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import './styles.css'
 import firebase from '../../Services/firebaseConnection'
 
@@ -13,6 +13,7 @@ function Dashboard() {
 
     const [calleds, setCalleds] = useState([])
 
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchCalleds() {
@@ -78,7 +79,7 @@ function Dashboard() {
                             </tr>
                         </thead>
                         <tbody>
-                            {calleds.map((call) =>
+                            {calleds.map((call) => 
                                 <tr key={call.id}>
                                     <td data-label="Cliente">{call.client}</td>
                                     <td data-label="Assunto">{call.subject}</td>
@@ -90,7 +91,7 @@ function Dashboard() {
                                         <button className='search'>
                                             <BiSearch color='#fff' size={20} />
                                         </button>
-                                        <button className='edit'>
+                                        <button className='edit' onClick={() => history.push(`/newcall/${call.id}`)}>
                                             <BiEditAlt color='#fff' size={20} />
                                         </button>
                                     </td>

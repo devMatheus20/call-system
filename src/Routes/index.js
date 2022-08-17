@@ -17,6 +17,7 @@ function Routes() {
             <Route exact path="/customers" component={Customers} isPrivate/>
             <Route exact path="/profile" component={Profile} isPrivate/>
             <Route exact path="/newcall" component={NewCall} isPrivate/>
+            <Route exact path="/newcall/:callId" component={NewCall} isPrivate/>
         </Switch>
     )
 }
