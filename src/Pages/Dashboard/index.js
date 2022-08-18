@@ -4,6 +4,7 @@ import './styles.css'
 import firebase from '../../Services/firebaseConnection'
 
 import { BiMessageDots, BiSearch, BiEditAlt } from 'react-icons/bi'
+import { IoMdClose } from 'react-icons/io'
 import { HiPlusSm } from 'react-icons/hi'
 
 import Title from '../../Components/Title'
@@ -12,6 +13,7 @@ import Header from '../../Components/Header'
 function Dashboard() {
 
     const [calleds, setCalleds] = useState([])
+    const [callDetails, setCallDetails] = useState(null)
 
     const history = useHistory()
 
@@ -39,7 +41,17 @@ function Dashboard() {
         fetchCalleds()
     }, [])
 
+    function createObjectDetails(client, subject, stats, create) {
+        setCallDetails({
+            client: client,
+            subject: subject,
+            stats: stats,
+            create: create
+        })
+    }
+
     return (
+        console.log(!!callDetails),
         <div className='container'>
             <Header />
 
@@ -79,7 +91,7 @@ function Dashboard() {
                             </tr>
                         </thead>
                         <tbody>
-                            {calleds.map((call) => 
+                            {calleds.map((call) =>
                                 <tr key={call.id}>
                                     <td data-label="Cliente">{call.client}</td>
                                     <td data-label="Assunto">{call.subject}</td>
@@ -89,7 +101,10 @@ function Dashboard() {
                                     <td data-label="Cadastrado em">{call.created}</td>
                                     <td data-label="#" className='actions'>
                                         <button className='search'>
-                                            <BiSearch color='#fff' size={20} />
+                                            <BiSearch
+                                                color='#fff'
+                                                size={20}
+                                                onClick={() => createObjectDetails(call.client, call.subject, call.stats, call.created)} />
                                         </button>
                                         <button className='edit' onClick={() => history.push(`/newcall/${call.id}`)}>
                                             <BiEditAlt color='#fff' size={20} />
@@ -99,6 +114,38 @@ function Dashboard() {
                             )}
                         </tbody>
                     </table>
+                }
+
+                {!!callDetails &&
+                    <div className='info-call'>
+                        <div>
+                            <h2>Detalhes do chamado</h2>
+
+                            <ul className='list'>
+                                <li>
+                                    <p>Cliente:</p>
+                                    <span>{callDetails.client}</span>
+                                </li>
+                                <li>
+                                    <p>Assunto:</p>
+                                    <span>{callDetails.subject}</span>
+                                </li>
+                                <li>
+                                    <p>Status:</p>
+                                    <span className='stats'>{callDetails.stats}</span>
+                                </li>
+                                <li>
+                                    <p>Cadastrado em:</p>
+                                    <span>{callDetails.create}</span>
+                                </li>
+                            </ul>
+
+                            <button onClick={() => setCallDetails(null)}>
+                                <IoMdClose size={25}/>
+                                Voltar
+                            </button>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
