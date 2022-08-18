@@ -51,7 +51,6 @@ function Dashboard() {
     }
 
     return (
-        console.log(!!callDetails),
         <div className='container'>
             <Header />
 
@@ -63,15 +62,9 @@ function Dashboard() {
 
                 {calleds.length === 0 ?
                     <div className='info-calleds'>
-                        <span>Nenhum chamado registrado...</span>
-                        <Link to="/newcall" className='new'>
-                            <HiPlusSm size={25} color="#fff" />
-                            Novo chamado
-                        </Link>
+                        <span>Buscando chamados...</span>
                     </div>
-
                     :
-
 
                     <Link to="/newcall" className='new'>
                         <HiPlusSm size={25} color="#fff" />
