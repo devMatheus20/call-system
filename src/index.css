@@ -10,23 +10,43 @@ html, body, #root {
   height: 100%;
 }
 
-.container {
+.flex {
   display: flex;
 }
 
-.calleds, .customers, .profile, .news-calleds {
-  background-color: #EFEFEF;
-  width: 100%;
+.margin {
+  margin: 25px 0 10px 0;
 }
 
-.info-profile, .info-customers, .create-newCall {
+.textCaptalize {
+  text-transform: capitalize;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.logout {
   background-color: #F8F8F8;
-  display: flex;
-  flex-direction: column;
-  width: 97.5%;
-  margin: 0 auto;
+  width: 100%;
+  margin-top: 15px;
+  padding: 15px 10px;
   border-radius: 6px;
-  padding-left: 11px;
 }
 
+.logout button {
+  background-color: #ccc;
+  padding: 5px 30px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #000;
+  border-radius: 6px;
+  border: none;
+}
 
+.s-singn {
+  background-color: #080713;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}

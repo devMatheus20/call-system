@@ -1,0 +1,20 @@
+.formButton {
+    background-color: #181C2E;
+    width: 46%;
+    margin-top: 30px;
+    padding: 8px 0;
+    color: #fff;
+    border-radius: 0.3rem;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.formButton:hover {
+    filter: brightness(1.5);
+}
+
+.formButton:active {
+    opacity: 0.7;
+}

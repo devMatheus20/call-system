@@ -3,9 +3,9 @@ import { toast } from 'react-toastify'
 import firebase from '../Services/firebaseConnection'
 
 
-export const AuthContext = createContext({})    
+export const AuthContext = createContext({})
 
-function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
 
     const [user, setUser] = useState(null)
     const [loadingAuth, setLoadingAuth] = useState(false)
@@ -28,32 +28,33 @@ function AuthProvider({ children }) {
 
     async function singIn(email, password) {
         setLoadingAuth(true)
+
         await firebase.auth().signInWithEmailAndPassword(email, password)
 
-        .then(async ( {user} ) => {
+            .then(async ({ user }) => {
 
-            const userProfile = await firebase.firestore().collection('users').doc(user.uid).get()
+                const userProfile = await firebase.firestore().collection('users').doc(user.uid).get()
 
-            console.log(userProfile)
+                console.log(userProfile)
 
-            let data = {
-                uid: userProfile.id,
-                nome: userProfile.data().nome,
-                email:  userProfile.data().email,
-                avatarUrl: null
-            }
+                let data = {
+                    uid: userProfile.id,
+                    nome: userProfile.data().nome,
+                    email: userProfile.data().email,
+                    avatarUrl: null
+                }
 
-            setUser(data)
-            storageUser(data)
-            setLoadingAuth(false)
-            toast.success("Bem-vindo de volta!")
-        })
+                setUser(data)
+                storageUser(data)
+                setLoadingAuth(false)
+                toast.success("Bem-vindo de volta!")
+            })
 
-        .catch(error => {
-            console.log(error)
-            setLoadingAuth(false)
-            toast.error("Ops algo deu errado")
-        })
+            .catch(error => {
+                console.log(error)
+                setLoadingAuth(false)
+                toast.error("Ops algo deu errado")
+            })
     }
 
     async function singUp(email, password, name) {
@@ -67,19 +68,19 @@ function AuthProvider({ children }) {
                     avatarUrl: null
                 })
 
-                .then(() => {
-                    let data = {
-                        uid: user.uid,
-                        nome: name,
-                        email: user.email,
-                        avatarUrl: null
-                    }
+                    .then(() => {
+                        let data = {
+                            uid: user.uid,
+                            nome: name,
+                            email: user.email,
+                            avatarUrl: null
+                        }
 
-                    setUser(data)
-                    storageUser(data)
-                    setLoadingAuth(false)
-                    toast.success("Bem-vindo a plataforma!")
-                })
+                        setUser(data)
+                        storageUser(data)
+                        setLoadingAuth(false)
+                        toast.success("Bem-vindo a plataforma!")
+                    })
             })
 
             .catch(error => {
@@ -90,7 +91,7 @@ function AuthProvider({ children }) {
     }
 
     function storageUser(data) {
-        localStorage.setItem('SistemaUser' ,JSON.stringify(data))
+        localStorage.setItem('SistemaUser', JSON.stringify(data))
     }
 
     function logout() {
@@ -100,11 +101,13 @@ function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ singed: !!user, user, setUser, storageUser, loading, loadingAuth, singUp, singIn, logout }}>
+        <AuthContext.Provider
+            value={{ singed: !!user, user, setUser, storageUser, loading, loadingAuth, singUp, singIn, logout }}
+        >
             {children}
         </AuthContext.Provider>
     )
 }
 
-export default AuthProvider
+
 

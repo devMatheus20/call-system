@@ -1,18 +1,21 @@
 import React, { useState, useRef, useContext } from 'react'
-import './styles.css'
 
 import { toast } from 'react-toastify'
 import firebase from '../../Services/firebaseConnection'
 import { AuthContext } from '../../Context/auth'
 
 import { BsGear } from 'react-icons/bs'
-import { MdOutlineUpload } from 'react-icons/md'
+import { FiUpload } from "react-icons/fi";
 
 import Title from '../../Components/Title'
 import Header from '../../Components/Header'
+import Content from '../../Components/Content'
+import Form from '../../Components/PrivateForm'
+import Label from '../../Components/PrivateLabel'
+import Button from '../../Components/PrivateButton'
 
 
-function Profile() {
+export default function Profile() {
 
     const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
@@ -90,6 +93,12 @@ function Profile() {
 
                     setUser(data)
                     storageUser(data)
+                    toast.success("Dados atualizados com sucesso!")
+                })
+
+                .catch(error => {
+                    toast.error("Ops, algo deu errado!")
+                    console.log(error)
                 })
         }
 
@@ -97,51 +106,63 @@ function Profile() {
     }
 
     return (
-        <div className='container'>
+        <div className='flex'>
             <Header />
 
-            <div className='profile'>
+            <Content>
                 <Title>
                     <BsGear color="#000" size={27} />
                     Meu perfil
                 </Title>
 
-                <div className='info-profile'>
-                    <label className='img-profile'>
+                <Form onSubmit={handleSave}>
+
+                    <div className='img-profile'>
+
                         <input type="file" accept='image/*' onChange={handleFile} />
+
                         {avatarUrl === null ?
                             <img src={require("../../Assets/user.png")} alt="Imagem do Perfil" />
                             :
                             <img src={avatarUrl} alt="Imagem do Perfil" />
                         }
-                        <MdOutlineUpload size={33} color="#ccc" />
-                    </label>
+                        
+                        <FiUpload size={23} color="#ccc" />
 
-                    <form onSubmit={handleSave} className="form-profile">
-                        <label>
-                            Nome
-                            <input defaultValue={name} onChange={(e) => setName(e.target.value)} />
-                        </label>
+                    </div>
 
-                        <label>
-                            Email
-                            <input className='disabled' defaultValue={email} disabled />
-                        </label>
+                    <Label>Nome</Label>
+                    <input
+                        onChange={(e) => setName(e.target.value)}
+                        defaultValue={name}
+                        type="text"
+                        maxLength={80}
+                    />
 
-                        <button type='submit'>
-                            Salvar
-                        </button>
-                    </form>
-                </div>
+
+                    <Label>Email</Label>
+                    <input
+                        className='disabled'
+                        defaultValue={email}
+                        type="text"
+                        maxLength={80}
+                        disabled
+                    />
+
+                    <Button type='submit'>
+                        Salvar
+                    </Button>
+
+                </Form>
+
 
                 <div className='logout'>
                     <button onClick={logout}>
                         Sair
                     </button>
                 </div>
-            </div>
+            </Content>
         </div>
     )
 }
 
-export default Profile;

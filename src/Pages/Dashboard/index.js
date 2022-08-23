@@ -4,16 +4,20 @@ import './styles.css'
 import firebase from '../../Services/firebaseConnection'
 
 import { BiMessageDots, BiSearch, BiEditAlt } from 'react-icons/bi'
-import { IoMdClose } from 'react-icons/io'
 import { HiPlusSm } from 'react-icons/hi'
 
-import Title from '../../Components/Title'
 import Header from '../../Components/Header'
+import Content from '../../Components/Content'
+import Title from '../../Components/Title'
+import Modal from '../../Components/Modal'
 
-function Dashboard() {
+
+export default function Dashboard() {
 
     const [calleds, setCalleds] = useState([])
     const [callDetails, setCallDetails] = useState(null)
+
+    const [boolean, setBoolean] = useState(false)
 
     const history = useHistory()
 
@@ -41,20 +45,23 @@ function Dashboard() {
         fetchCalleds()
     }, [])
 
-    function createObjectDetails(client, subject, stats, create) {
+    function togglePostModal(call) {
+        
         setCallDetails({
-            client: client,
-            subject: subject,
-            stats: stats,
-            create: create
+            client: call.client,
+            subject: call.subject,
+            stats: call.stats,
+            create: call.created
         })
+    
+        setBoolean(!boolean)
     }
 
     return (
-        <div className='container'>
+        <div className='flex'>
             <Header />
 
-            <div className='calleds'>
+            <Content>
                 <Title>
                     <BiMessageDots color="#000" size={27} />
                     Chamados
@@ -97,7 +104,7 @@ function Dashboard() {
                                             <BiSearch
                                                 color='#fff'
                                                 size={20}
-                                                onClick={() => createObjectDetails(call.client, call.subject, call.stats, call.created)} />
+                                                onClick={() => togglePostModal(call)} />
                                         </button>
                                         <button className='edit' onClick={() => history.push(`/newcall/${call.id}`)}>
                                             <BiEditAlt color='#fff' size={20} />
@@ -109,40 +116,9 @@ function Dashboard() {
                     </table>
                 }
 
-                {!!callDetails &&
-                    <div className='info-call'>
-                        <div>
-                            <h2>Detalhes do chamado</h2>
+                {boolean && <Modal content={callDetails} close={togglePostModal}/>}
 
-                            <ul className='list'>
-                                <li>
-                                    <p>Cliente:</p>
-                                    <span>{callDetails.client}</span>
-                                </li>
-                                <li>
-                                    <p>Assunto:</p>
-                                    <span>{callDetails.subject}</span>
-                                </li>
-                                <li>
-                                    <p>Status:</p>
-                                    <span className='stats'>{callDetails.stats}</span>
-                                </li>
-                                <li>
-                                    <p>Cadastrado em:</p>
-                                    <span>{callDetails.create}</span>
-                                </li>
-                            </ul>
-
-                            <button onClick={() => setCallDetails(null)}>
-                                <IoMdClose size={25}/>
-                                Voltar
-                            </button>
-                        </div>
-                    </div>
-                }
-            </div>
+            </Content>
         </div>
     )
 }
-
-export default Dashboard

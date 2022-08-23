@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './styles.css'
-import firebase from '../../Services/firebaseConnection'
 import { useParams } from 'react-router-dom'
+
+import firebase from '../../Services/firebaseConnection'
+
 import { toast } from 'react-toastify'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
@@ -9,8 +10,13 @@ import { FiEdit } from 'react-icons/fi'
 
 import Title from '../../Components/Title'
 import Header from '../../Components/Header'
+import Content from '../../Components/Content'
+import Form from '../../Components/PrivateForm'
+import Label from '../../Components/PrivateLabel'
+import Button from '../../Components/PrivateButton'
 
-function NewCall() {
+
+export default function NewCall() {
 
     const { callId } = useParams()
 
@@ -83,26 +89,28 @@ function NewCall() {
     async function handleUpdate(e) {
         e.preventDefault()
 
-        await firebase.firestore().collection('calls').doc(callId).update({
-            assunto: subject,
-            status: stats,
-            complemento: complement
-        })
+        await firebase.firestore().collection('calls').doc(callId)
+            .update({
+                assunto: subject,
+                status: stats,
+                complemento: complement
+            })
 
-        .then(() => toast.success("Dados atualizados com sucesso!"))
+            .then(() => toast.success("Dados atualizados com sucesso!"))
 
-        .catch(error => {
-            toast.error("Ops algo deu errado!")
-            console.log(error)
-        })
+            .catch(error => {
+                toast.error("Ops algo deu errado!")
+                console.log(error)
+            })
     }
 
 
     return (
-        <div className='container'>
+        <div className='flex'>
+
             <Header />
 
-            <div className='news-calleds'>
+            <Content>
 
                 {callId === undefined ?
                     <Title>
@@ -116,89 +124,86 @@ function NewCall() {
                     </Title>
                 }
 
-                <div className='create-newCall'>
-                    <form onSubmit={callId ? handleUpdate : handleRegister}>
+                <Form onSubmit={callId ? handleUpdate : handleRegister}>
+
+                    <Label>Cliente</Label>
+                    <select onChange={(e) => setTextOption(e.target.value)} disabled={callId}>
+                        <option value={textOption}>{textOption}</option>
+
+                        {nameCustomers.map((name, index) =>
+                            <option key={index} value={name}>{name}</option>
+                        )}
+                    </select>
+
+
+                    <Label>Assunto</Label>
+                    <select onChange={(e) => setSubject(e.target.value)} value={subject}>
+                        <option value='Suporte'>
+                            Suporte
+                        </option>
+
+                        <option value='Visita Técnica'>
+                            Visita Técnica
+                        </option>
+
+                        <option value='Financeiro'>
+                            Financeiro
+                        </option>
+                    </select>
+
+
+                    <Label>Status</Label>
+                    <div className='stats-called'>
                         <label>
-                            Cliente
-                            <select onChange={(e) => setTextOption(e.target.value)} disabled={callId}>
-                                <option value={textOption}>{textOption}</option>
-
-                                {nameCustomers.map(name =>
-                                    <option key={name} value={name}>{name}</option>
-                                )}
-                            </select>
-                        </label>
-
-                        <label>
-                            Assunto
-                            <select onChange={(e) => setSubject(e.target.value)}>
-                                <option value='Suporte' selected={subject === 'Suporte'}>
-                                    Suporte
-                                </option>
-
-                                <option value='Visita Técnica' selected={subject === 'Visita Técnica'}>
-                                    Visita Técnica
-                                </option>
-
-                                <option value='Financeiro' selected={subject === 'Financeiro'}>
-                                    Financeiro
-                                </option>
-                            </select>
-                        </label>
-
-                        <label className='margin'>
-                            Status
-                            <div className='stats-called'>
-                                <label>
-                                    <input
-                                        onClick={(e) => setStats(e.target.value)}
-                                        type="radio"
-                                        name='radio'
-                                        value="Em aberto"
-                                        checked={stats === 'Em aberto'} />
-                                    Em aberto
-                                </label>
-
-                                <label>
-                                    <input
-                                        onClick={(e) => setStats(e.target.value)}
-                                        type="radio"
-                                        name='radio'
-                                        value="Progresso"
-                                        checked={stats === 'Progresso'} />
-                                    Progresso
-                                </label>
-
-                                <label>
-                                    <input
-                                        onClick={(e) => setStats(e.target.value)}
-                                        type="radio"
-                                        name='radio'
-                                        value="Atendido"
-                                        checked={stats === 'Atendido'} />
-                                    Atendido
-                                </label>
-                            </div>
+                            <input
+                                onChange={(e) => setStats(e.target.value)}
+                                type="radio"
+                                name='radio'
+                                value="Em aberto"
+                                checked={stats === 'Em aberto'}
+                            />
+                            Em aberto
                         </label>
 
                         <label>
-                            Complemento
-                            <textarea
-                                onChange={(e) => setComplement(e.target.value)}
-                                value={complement}
-                                placeholder='Descreva seu problema (opcional).'>
-                            </textarea>
+                            <input
+                                onChange={(e) => setStats(e.target.value)}
+                                type="radio"
+                                name='radio'
+                                value="Progresso"
+                                checked={stats === 'Progresso'}
+                            />
+                            Progresso
                         </label>
 
-                        <button type='submit'>
-                            {callId === undefined ? 'Registrar' : 'Atualizar'}
-                        </button>
-                    </form>
-                </div>
-            </div>
+                        <label>
+                            <input
+                                onChange={(e) => setStats(e.target.value)}
+                                type="radio"
+                                name='radio'
+                                value="Atendido"
+                                checked={stats === 'Atendido'}
+                            />
+                            Atendido
+                        </label>
+                    </div>
+
+
+                    <Label>Complemento</Label>
+                    <textarea
+                        onChange={(e) => setComplement(e.target.value)}
+                        value={complement}
+                        placeholder='Descreva seu problema (opcional).'>
+                    </textarea>
+
+
+                    <Button type='submit'>
+                        {callId === undefined ? 'Registrar' : 'Atualizar'}
+                    </Button>
+                </Form>
+
+            </Content>
         </div>
     )
 }
 
-
-export default NewCall
