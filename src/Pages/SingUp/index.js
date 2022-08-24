@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../Context/auth'
 
-import { FaSpinner } from 'react-icons/fa'
 
+
+import Loading from '../../Components/Loading'
 import SignForm from '../../Components/SignForm'
+import SignTitle from '../../Components/SignTitle'
+import SignButton from '../../Components/SignButton'
 
 
 export default function SingUp() {
@@ -33,7 +36,7 @@ export default function SingUp() {
 
             <SignForm onSubmit={clickRegister}>
 
-                <h1>Registro</h1>
+                <SignTitle>Registro</SignTitle>
 
                 <input
                     placeholder='Seu Nome'
@@ -54,13 +57,13 @@ export default function SingUp() {
                     ref={passwordRef}
                 />
 
-                <button type='submit'>
+                <SignButton type='submit'>
                     {loadingAuth ?
-                        <FaSpinner size={20} />
+                        <Loading />
                         :
                         'Criar conta'
                     }
-                </button>
+                </SignButton>
 
                 <p>
                     Você já possui uma conta?

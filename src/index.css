@@ -26,27 +26,15 @@ html, body, #root {
   cursor: not-allowed;
 }
 
-.logout {
-  background-color: #F8F8F8;
-  width: 100%;
-  margin-top: 15px;
-  padding: 15px 10px;
-  border-radius: 6px;
-}
-
-.logout button {
-  background-color: #ccc;
-  padding: 5px 30px;
-  font-weight: 500;
-  font-size: 20px;
-  color: #000;
-  border-radius: 6px;
-  border: none;
-}
-
 .s-singn {
   background-color: #080713;
   display: grid;
   place-items: center;
   height: 100vh;
+}
+
+.badge {
+  border-radius: 3px;
+  color: #fff;
+  padding: 3px;
 }

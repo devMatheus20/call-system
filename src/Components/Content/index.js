@@ -1,8 +1,12 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
+
+
 
 export default function Content({ children }) {
     return(
-        <div className='content'>{children}</div>
+        <S.Content className='content'>
+            {children}
+        </S.Content>
     )
 }

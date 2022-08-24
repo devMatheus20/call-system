@@ -46,14 +46,14 @@ export default function Dashboard() {
     }, [])
 
     function togglePostModal(call) {
-        
+
         setCallDetails({
             client: call.client,
             subject: call.subject,
             stats: call.stats,
             create: call.created
         })
-    
+
         setBoolean(!boolean)
     }
 
@@ -96,7 +96,12 @@ export default function Dashboard() {
                                     <td data-label="Cliente">{call.client}</td>
                                     <td data-label="Assunto">{call.subject}</td>
                                     <td data-label="Status">
-                                        <span className='stats'>{call.stats}</span>
+                                        <span
+                                            style={{ backgroundColor: call.stats === "Em aberto" ? "#5cb85b" : "#999" }}
+                                            className="badge"
+                                        >
+                                            {call.stats}
+                                        </span>
                                     </td>
                                     <td data-label="Cadastrado em">{call.created}</td>
                                     <td data-label="#" className='actions'>
@@ -116,7 +121,7 @@ export default function Dashboard() {
                     </table>
                 }
 
-                {boolean && <Modal content={callDetails} close={togglePostModal}/>}
+                {boolean && <Modal content={callDetails} close={togglePostModal} />}
 
             </Content>
         </div>

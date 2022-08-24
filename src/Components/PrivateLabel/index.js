@@ -1,11 +1,11 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
 
 
 export default function Label({children, ...props}){
     return (
-        <label {...props}>
+        <S.Label {...props}>
             {children}
-        </label>
+        </S.Label>
     )
 }

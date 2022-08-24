@@ -1,11 +1,11 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
 
 
 export default function SignForm({ children, ...props }) {
     return (
-        <form {...props} className="signForm">
+        <S.Form {...props} className="signForm">
             {children}
-        </form>
+        </S.Form>
     )
 }

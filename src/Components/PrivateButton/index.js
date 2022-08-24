@@ -1,11 +1,14 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
 
 
-export default function Button({children, ...props }) {
+export default function PrivateButton({ children, ...props }) {
     return (
-        <button {...props} className="formButton">
+        <S.Button
+            className="formButton"
+            {...props}
+        >
             {children}
-        </button>
+        </S.Button>
     )
 }

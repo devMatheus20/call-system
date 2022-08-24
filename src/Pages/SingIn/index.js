@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../Context/auth'
 
-import { FaSpinner } from 'react-icons/fa'
-
+import Loading from '../../Components/Loading'
 import SignForm from '../../Components/SignForm'
+import SignTitle from '../../Components/SignTitle'
+import SignButton from '../../Components/SignButton'
 
 
 
@@ -30,7 +31,7 @@ export default function SingIn() {
 
             <SignForm onSubmit={clickLogin}>
 
-                <h1>Entrar</h1>
+                <SignTitle>Entrar</SignTitle>
 
                 <input
                     placeholder='Email'
@@ -46,13 +47,13 @@ export default function SingIn() {
                     autoComplete={"current-password"}
                 />
 
-                <button type='submit'>
+                <SignButton type='submit'>
                     {loadingAuth ?
-                        <FaSpinner size={20} />
+                        <Loading/>
                         :
                         'Acessar'
                     }
-                </button>
+                </SignButton>
 
                 <p>
                     Ainda não possui uma conta?
@@ -61,6 +62,7 @@ export default function SingIn() {
                         <span>Criar uma conta</span>
                     </Link>
                 </p>
+
             </SignForm>
             
         </section>

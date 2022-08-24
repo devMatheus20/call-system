@@ -1,11 +1,11 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
 
 export default function Form({ children, ...props }) {
     return (
-        <form {...props}>
+        <S.Form {...props}>
             {children}
-        </form>
+        </S.Form>
     )
 }
 

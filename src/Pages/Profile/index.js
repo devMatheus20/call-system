@@ -1,7 +1,8 @@
 import React, { useState, useRef, useContext } from 'react'
+import * as S from './styles.js'
 
-import { toast } from 'react-toastify'
 import firebase from '../../Services/firebaseConnection'
+import { toast } from 'react-toastify'
 import { AuthContext } from '../../Context/auth'
 
 import { BsGear } from 'react-icons/bs'
@@ -13,6 +14,7 @@ import Content from '../../Components/Content'
 import Form from '../../Components/PrivateForm'
 import Label from '../../Components/PrivateLabel'
 import Button from '../../Components/PrivateButton'
+import Logout from '../../Components/Logout/'
 
 
 export default function Profile() {
@@ -117,7 +119,7 @@ export default function Profile() {
 
                 <Form onSubmit={handleSave}>
 
-                    <div className='img-profile'>
+                    <S.ImageProfile>
 
                         <input type="file" accept='image/*' onChange={handleFile} />
 
@@ -129,7 +131,7 @@ export default function Profile() {
                         
                         <FiUpload size={23} color="#ccc" />
 
-                    </div>
+                    </S.ImageProfile>
 
                     <Label>Nome</Label>
                     <input
@@ -155,12 +157,8 @@ export default function Profile() {
 
                 </Form>
 
+                <Logout />
 
-                <div className='logout'>
-                    <button onClick={logout}>
-                        Sair
-                    </button>
-                </div>
             </Content>
         </div>
     )

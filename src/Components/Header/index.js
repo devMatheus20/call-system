@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import './styles.css'
 import { Link } from "react-router-dom";
+import * as S from './styles.js'
+
 import { AuthContext } from '../../Context/auth'
+
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
 import { BsGear } from 'react-icons/bs'
+
 import avatar from '../../Assets/user.png'
 
 
@@ -12,15 +15,17 @@ export default function Header() {
     const { user } = useContext(AuthContext)
 
     return (
-        <header>
-            <div className="imgUser">
+        <S.SideBar>
+
+            <S.ImageUser className="imgUser">
                 <img
                     src={user.avatarUrl === null ? avatar : user.avatarUrl}
                     alt="Imagem do Perfil"
                 />
-            </div>
+            </S.ImageUser>
 
-            <div className="links">
+            <S.Links className="links">
+
                 <Link to="/dashboard">
                     <AiOutlineHome color="#fff" size={25} />
                     <span>Chamados</span>
@@ -35,8 +40,10 @@ export default function Header() {
                     <BsGear color="#fff" size={25} />
                     <span>Perfil</span>
                 </Link>
-            </div>
-        </header>
+
+            </S.Links>
+
+        </S.SideBar>
     )
 }
 
