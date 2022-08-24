@@ -37,13 +37,14 @@ export const Table = styled.table`
 
     th {
         font-size: 12px;
-        letter-spacing: 1px;
+        font-weight: 1000;
+        letter-spacing: 2px;
         text-transform: uppercase;
         padding: 7px 0;
     }
 
     td {
-        font-size: 15px;
+        font-size: 14px;
         padding: 10px;
         overflow: hidden;
     }

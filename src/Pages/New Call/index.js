@@ -14,6 +14,7 @@ import Content from '../../Components/Content'
 import Form from '../../Components/PrivateForm'
 import Label from '../../Components/PrivateLabel'
 import Button from '../../Components/PrivateButton'
+import Stats from '../../Components/FormStatsCall'
 
 
 export default function NewCall() {
@@ -25,7 +26,7 @@ export default function NewCall() {
     const [textOption, setTextOption] = useState('Carregando...')
 
     const [subject, setSubject] = useState('Suporte')
-    const [stats, setStats] = useState('Em aberto')
+    const [stats, setStats] = useState('Aberto')
     const [complement, setComplement] = useState('')
 
 
@@ -36,6 +37,7 @@ export default function NewCall() {
             await firebase.firestore().collection('customers').get()
 
                 .then((snapshot) => {
+                    console.log(snapshot)
                     let customers = []
 
                     snapshot.forEach(doc => {
@@ -75,10 +77,10 @@ export default function NewCall() {
             cliente: textOption,
             assunto: subject,
             status: stats,
-            complemento: complement ? complement : 'Complemento vazio'
+            complemento: complement ? complement : ''
         })
 
-            .then(() => toast.success("Chamado criado com sucesso!"))
+            .then(() => toast.success("Chamado registrado com sucesso!"))
 
             .catch(error => {
                 toast.error("Ops algo deu errado!")
@@ -153,16 +155,16 @@ export default function NewCall() {
 
 
                     <Label>Status</Label>
-                    <div className='stats-called'>
+                    <Stats>
                         <label>
                             <input
                                 onChange={(e) => setStats(e.target.value)}
                                 type="radio"
                                 name='radio'
-                                value="Em aberto"
-                                checked={stats === 'Em aberto'}
+                                value="Aberto"
+                                checked={stats === 'Aberto'}
                             />
-                            Em aberto
+                            Aberto
                         </label>
 
                         <label>
@@ -186,14 +188,16 @@ export default function NewCall() {
                             />
                             Atendido
                         </label>
-                    </div>
+                    </Stats>
 
 
                     <Label>Complemento</Label>
                     <textarea
                         onChange={(e) => setComplement(e.target.value)}
                         value={complement}
-                        placeholder='Descreva seu problema (opcional).'>
+                        placeholder='Descreva seu problema (opcional).'
+                        maxLength={170}
+                    >
                     </textarea>
 
 

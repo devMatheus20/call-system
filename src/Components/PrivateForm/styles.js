@@ -10,7 +10,7 @@ export const Form = styled.form`
     padding-bottom: 20px;
     border-radius: 6px;
 
-    input {
+    input[type=text] {
         display: block;
         width: 46%;
         padding: 9px;

@@ -14,32 +14,44 @@ export default function Modal({ content, close }) {
 
                 <S.ListModal>
 
-                    <li>
-                        <p>Cliente:</p>
-                        <span>{content.client}</span>
-                    </li>
+                    <div className="col-1">
 
-                    <li>
-                        <p>Assunto:</p>
-                        <span>{content.subject}</span>
-                    </li>
+                        <li>
+                            <p>Cliente:</p>
+                            <span>{content.client}</span>
+                        </li>
 
-                    <li>
-                        <p>Status:</p>
-                        <span
-                            style={{ backgroundColor: content.stats === "Em aberto" ? "#5cb85b" : "#999" }}
-                            className="badge"
-                        >
-                            {content.stats}
-                        </span>
-                    </li>
+                        <li>
+                            <p>Assunto:</p>
+                            <span>{content.subject}</span>
+                        </li>
 
-                    <li>
-                        <p>Cadastrado em:</p>
-                        <span>{content.create}</span>
-                    </li>
+                        <li>
+                            <p>Status:</p>
+                            <span
+                                style={{ backgroundColor: content.stats === "Em aberto" ? "#5cb85b" : "#999" }}
+                                className="badge"
+                            >
+                                {content.stats}
+                            </span>
+                        </li>
+
+                        <li>
+                            <p>Cadastrado em:</p>
+                            <span>{content.create}</span>
+                        </li>
+                    </div>
+
+                    <div className="col-2">
+                        <li>
+                            <p>Complemento</p>
+                            <span>{content.complement}</span>
+                        </li>
+                    </div>
 
                 </S.ListModal>
+
+
 
                 <button
                     onClick={close}>

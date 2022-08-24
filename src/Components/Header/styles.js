@@ -51,6 +51,7 @@ export const Links = styled.div`
 
         :hover {
             background-color: #000;
+            color: #fff;
         }
 
         svg {

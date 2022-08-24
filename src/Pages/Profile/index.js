@@ -15,7 +15,7 @@ import Form from '../../Components/PrivateForm'
 import Label from '../../Components/PrivateLabel'
 import Button from '../../Components/PrivateButton'
 import Logout from '../../Components/Logout/'
-
+import Loading from '../../Components/Loading'
 
 export default function Profile() {
 
@@ -26,6 +26,8 @@ export default function Profile() {
     const [email, setEmail] = useState(user && user.email)
 
     const [inputImage, setInputImage] = useState(null)
+
+    const [loading, setLoading] = useState(false)
 
 
 
@@ -46,6 +48,8 @@ export default function Profile() {
     }
 
     async function handleUpload() {
+
+        setLoading(true)
 
         const uploadTask = firebase.storage()
             .ref(`images/${user.uid}/${inputImage.name}`)
@@ -71,6 +75,8 @@ export default function Profile() {
 
                                 setUser(data)
                                 storageUser(data)
+                                setLoading(false)
+                                toast.success("Dados atualizados com sucesso!")
                             })
                     })
             })
@@ -81,6 +87,7 @@ export default function Profile() {
 
     async function handleSave(e) {
         e.preventDefault()
+        setLoading(true)
 
         if (inputImage === null && name !== '') {
             await firebase.firestore().collection('users').doc(user.uid).update({
@@ -95,6 +102,7 @@ export default function Profile() {
 
                     setUser(data)
                     storageUser(data)
+                    setLoading(false)
                     toast.success("Dados atualizados com sucesso!")
                 })
 
@@ -128,7 +136,7 @@ export default function Profile() {
                             :
                             <img src={avatarUrl} alt="Imagem do Perfil" />
                         }
-                        
+
                         <FiUpload size={23} color="#ccc" />
 
                     </S.ImageProfile>
@@ -152,7 +160,11 @@ export default function Profile() {
                     />
 
                     <Button type='submit'>
-                        Salvar
+                        {loading ?
+                            <Loading />
+                            :
+                            'Salvar'
+                        }
                     </Button>
 
                 </Form>

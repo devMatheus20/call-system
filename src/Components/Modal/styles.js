@@ -16,8 +16,8 @@ export const ContainerModal = styled.section`
 export const Modal = styled.article`
     background-color: #fff;
     height: 270px;
-    width: 39%;
-    padding: 30px;
+    width: 600px;
+    padding: 20px;
     margin-top: 120px;
     border: 1px solid #ccc;
     border-radius: 0.3rem;
@@ -25,7 +25,7 @@ export const Modal = styled.article`
     position: relative;
 
     h2 {
-        font-size: 27px;
+        font-size: 26px;
         padding-bottom: 5px;
         border-bottom: 1px solid #181C2E;
     }
@@ -43,6 +43,10 @@ export const Modal = styled.article`
         color: #fff;
         cursor: pointer;
 
+        :hover {
+            filter: brightness(1.5);
+        }
+
         svg {
             margin-right: 5px;
         }
@@ -51,20 +55,23 @@ export const Modal = styled.article`
 `
 
 export const ListModal = styled.ul`
-    display: flex;
-    flex-direction: column;
-    max-height: 140px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-    list-style: none;
+    max-height: 150px;
+    margin: 20px 0 0 10px;
 
-    li {
+    .col-1 {
         display: flex;
-        align-items: center;
-        margin: 10px 0;
-        font-size: 17px;
-        overflow: hidden;
-        max-width: 250px;
+        flex-wrap: wrap;
+        flex-direction: column;
+        max-height: 100px;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            overflow: hidden;
+            max-width: 250px;
+        }
 
         p {
             font-weight: 900;
@@ -74,6 +81,30 @@ export const ListModal = styled.ul`
             margin-left: 7px;
             font-style: italic;
             letter-spacing: 0.5px;
+        }
+    }
+
+    .col-2 {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+
+        li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        p {
+            font-weight: 900;
+        }
+
+        span {
+            margin-top: 5px;
+            font-style: italic;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            max-width: 400px;
+            overflow: hidden;
         }
     }
 `

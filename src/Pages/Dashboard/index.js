@@ -23,7 +23,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         async function fetchCalleds() {
-            firebase.firestore().collection('calls').orderBy('criadoEm', 'asc')
+            firebase.firestore().collection('calls').orderBy('criadoEm', 'desc')
                 .onSnapshot((snapshot) => {
                     let calls = []
 
@@ -51,7 +51,8 @@ export default function Dashboard() {
             client: call.client,
             subject: call.subject,
             stats: call.stats,
-            create: call.created
+            create: call.created,
+            complement: call.complement
         })
 
         setBoolean(!boolean)
@@ -69,7 +70,11 @@ export default function Dashboard() {
 
                 {calleds.length === 0 ?
                     <S.InfoCalled>
-                        <span>Buscando chamados...</span>
+                        <span>Nenhum chamado registrado</span>
+                        <Link to="/newcall" className='new-call'>
+                            <HiPlusSm size={25} color="#fff" />
+                            Novo chamado
+                        </Link>
                     </S.InfoCalled>
                     :
 

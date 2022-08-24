@@ -29,11 +29,14 @@ export default function Customers() {
             await firebase.firestore().collection('customers').add({
                 NomeDaEmpresa: name,
                 CNPJ: cnpj,
-                Endereço: andress
+                Endereço: andress,
             })
 
                 .then(() => {
                     toast.success("Empresa cadastrada com sucesso!")
+                    nameRef.current.value = ''
+                    cnpjRef.current.value = ''
+                    andressRef.current.value = ''
                 })
 
                 .catch(error => {
@@ -59,11 +62,12 @@ export default function Customers() {
 
                 <Form onSubmit={handleAdd}>
 
-                    <Label>Nome fantasia</Label>
+                    <Label>Nome da Empresa</Label>
                     <input
                         placeholder="Nome da sua empresa"
                         type="text"
                         ref={nameRef}
+                        maxLength={25}
                     />
 
                     <Label>CNPJ</Label>
@@ -71,6 +75,7 @@ export default function Customers() {
                         placeholder="Seu CNPJ"
                         type="text"
                         ref={cnpjRef}
+                        maxLength={25}
                     />
 
                     <Label>Endereço</Label>
@@ -79,6 +84,7 @@ export default function Customers() {
                         placeholder="Seu endereço"
                         type="text"
                         ref={andressRef}
+                        maxLength={25}
                     />
 
 
