@@ -32,7 +32,7 @@ export default function SingUp() {
     }
 
     return (
-        <section className='s-singn'>
+        <section className='mainContainer'>
 
             <SignForm onSubmit={clickRegister}>
 

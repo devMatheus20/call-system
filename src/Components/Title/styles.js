@@ -1,4 +1,7 @@
-.title {
+import styled from 'styled-components'
+
+
+export const Title = styled.h2 `
     background-color: #F8F8F8;
     display: flex;
     align-items: center;
@@ -9,4 +12,4 @@
     border-radius: 6px;
     font-size: 20px;
     font-weight: 400;
-}
+`

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import './styles.css'
+import * as S from './styles.js'
 import firebase from '../../Services/firebaseConnection'
 
 import { BiMessageDots, BiSearch, BiEditAlt } from 'react-icons/bi'
@@ -68,19 +68,19 @@ export default function Dashboard() {
                 </Title>
 
                 {calleds.length === 0 ?
-                    <div className='info-calleds'>
+                    <S.InfoCalled>
                         <span>Buscando chamados...</span>
-                    </div>
+                    </S.InfoCalled>
                     :
 
-                    <Link to="/newcall" className='new'>
+                    <Link to="/newcall" className='new-call'>
                         <HiPlusSm size={25} color="#fff" />
                         Novo chamado
                     </Link>
                 }
 
                 {calleds.length > 0 &&
-                    <table>
+                    <S.Table>
                         <thead>
                             <tr>
                                 <th scope='col'>Cliente</th>
@@ -118,7 +118,7 @@ export default function Dashboard() {
                                 </tr>
                             )}
                         </tbody>
-                    </table>
+                    </S.Table>
                 }
 
                 {boolean && <Modal content={callDetails} close={togglePostModal} />}

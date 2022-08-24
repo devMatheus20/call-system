@@ -27,7 +27,7 @@ export default function SingIn() {
     }
 
     return (
-        <section className='s-singn'>
+        <section className='mainContainer'>
 
             <SignForm onSubmit={clickLogin}>
 

@@ -1,10 +1,10 @@
 import React from 'react'
-import './styles.css'
+import * as S from './styles.js'
 
 
 export default function Title({ children }) {
     return (
-        <h2 className='title'>{children}</h2>
+        <S.Title className='title'>{children}</S.Title>
     )
 }
 
