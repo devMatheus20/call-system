@@ -35,13 +35,11 @@ export default function AuthProvider({ children }) {
 
                 const userProfile = await firebase.firestore().collection('users').doc(user.uid).get()
 
-                console.log(userProfile)
-
                 let data = {
                     uid: userProfile.id,
                     nome: userProfile.data().nome,
                     email: userProfile.data().email,
-                    avatarUrl: null
+                    avatarUrl: userProfile.data().avatarUrl
                 }
 
                 setUser(data)
@@ -51,9 +49,14 @@ export default function AuthProvider({ children }) {
             })
 
             .catch(error => {
-                console.log(error)
+
+                if(error.code === 'auth/wrong-password') toast.error("Senha incorreta!")
+
+                else if(error.code === 'auth/user-not-found') toast.error("Usuário não encontrado!")
+
+                else toast.error("Ops, algo deu errado!")
+                
                 setLoadingAuth(false)
-                toast.error("Ops algo deu errado")
             })
     }
 
@@ -84,8 +87,12 @@ export default function AuthProvider({ children }) {
             })
 
             .catch(error => {
+
+                if(error.code === 'auth/weak-password') toast.error("A senha deve ter pelo menos 6 caracteres!")
+
+                else toast.error("Ops algo deu errado!")
+                
                 console.log(error)
-                toast.error("Ops algo deu errado!")
                 setLoadingAuth(false)
             })
     }

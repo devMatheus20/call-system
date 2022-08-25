@@ -39,7 +39,7 @@ export default function Profile() {
                 setInputImage(image)
                 setAvatarUrl(URL.createObjectURL(e.target.files[0]))
             } else {
-                alert("Envie uma imagem do tipo JPEG ou PNG")
+                toast.info("Envie uma imagem do tipo JPEG ou PNG")
                 setInputImage(null)
 
                 return null

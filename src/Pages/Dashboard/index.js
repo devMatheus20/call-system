@@ -18,10 +18,14 @@ export default function Dashboard() {
     const [callDetails, setCallDetails] = useState(null)
 
     const [boolean, setBoolean] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const history = useHistory()
 
     useEffect(() => {
+
+        setLoading(true)
+
         async function fetchCalleds() {
             firebase.firestore().collection('calls').orderBy('criadoEm', 'desc')
                 .onSnapshot((snapshot) => {
@@ -39,6 +43,7 @@ export default function Dashboard() {
                     })
 
                     setCalleds(calls)
+                    setLoading(false)
                 })
         }
 
@@ -56,6 +61,25 @@ export default function Dashboard() {
         })
 
         setBoolean(!boolean)
+    }
+
+    if (loading) {
+        return (
+            <div className='flex'>
+                <Header />
+
+                <Content>
+                    <Title>
+                        <BiMessageDots color="#000" size={27} />
+                        Chamados
+                    </Title>
+
+                    <S.InfoCalled>
+                        <span>Buscando chamados...</span>
+                    </S.InfoCalled>
+                </Content>
+            </div>
+        )
     }
 
     return (

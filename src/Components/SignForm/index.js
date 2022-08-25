@@ -4,7 +4,7 @@ import * as S from './styles.js'
 
 export default function SignForm({ children, ...props }) {
     return (
-        <S.Form {...props} className="signForm">
+        <S.Form {...props}>
             {children}
         </S.Form>
     )

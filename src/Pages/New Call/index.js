@@ -37,7 +37,6 @@ export default function NewCall() {
             await firebase.firestore().collection('customers').get()
 
                 .then((snapshot) => {
-                    console.log(snapshot)
                     let customers = []
 
                     snapshot.forEach(doc => {

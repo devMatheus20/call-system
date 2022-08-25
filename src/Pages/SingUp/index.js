@@ -2,8 +2,7 @@ import React, { useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../Context/auth'
-
-
+import { toast } from 'react-toastify'
 
 import Loading from '../../Components/Loading'
 import SignForm from '../../Components/SignForm'
@@ -29,6 +28,7 @@ export default function SingUp() {
         const name = nameRef.current.value
 
         if (email !== '' && password !== '' && name !== '') singUp(email, password, name)
+        else toast.info("Preencha todos os campos!")
     }
 
     return (
@@ -39,6 +39,7 @@ export default function SingUp() {
                 <SignTitle>Registro</SignTitle>
 
                 <input
+                    className='textCaptalize'
                     placeholder='Seu Nome'
                     type="name"
                     ref={nameRef}

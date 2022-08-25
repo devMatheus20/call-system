@@ -2,11 +2,13 @@ import React, { useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../Context/auth'
+import { toast } from 'react-toastify'
 
 import Loading from '../../Components/Loading'
 import SignForm from '../../Components/SignForm'
 import SignTitle from '../../Components/SignTitle'
 import SignButton from '../../Components/SignButton'
+
 
 
 
@@ -24,6 +26,7 @@ export default function SingIn() {
         const password = passwordRef.current.value
 
         if (email !== '' && password !== '') singIn(email, password)
+        else toast.info("Preencha todos os campos!")
     }
 
     return (

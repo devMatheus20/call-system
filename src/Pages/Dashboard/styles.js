@@ -8,9 +8,10 @@ export const InfoCalled = styled.div `
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    width: 97.5%;
+    width: 100%;
     margin: 15px auto;
     padding: 60px 0;
+    border-radius: 6px;
 
     span {
         font-size: 17px;
