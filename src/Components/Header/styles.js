@@ -22,12 +22,14 @@ export const ImageUser = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    height: 150px;
  
     img {
         width: 90px;
-        padding: 30px 0;
+        height: 90px;
         filter: drop-shadow(2px 3px 6px #121212);
         border-radius: 50%;
+        object-fit: cover;
     }
 
     @media(max-width: 700px) {
