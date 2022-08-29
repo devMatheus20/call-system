@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 
 import firebase from '../../Services/firebaseConnection'
+import { AuthContext } from '../../Context/auth'
 
 import { toast } from 'react-toastify'
 
@@ -15,73 +16,95 @@ import Form from '../../Components/PrivateForm'
 import Label from '../../Components/PrivateLabel'
 import Button from '../../Components/PrivateButton'
 import Stats from '../../Components/FormStatsCall'
-
+import Loading from '../../Components/Loading'
 
 export default function NewCall() {
 
+    const history = useHistory()
+
     const { callId } = useParams()
+    const { user } = useContext(AuthContext)
 
-    const [nameCustomers, setNameCustomers] = useState([])
-
-    const [textOption, setTextOption] = useState('Carregando...')
+    const [customers, setCustomers] = useState([])
+    const [customerSelected, setCustomerSelected] = useState(0)
 
     const [subject, setSubject] = useState('Suporte')
     const [stats, setStats] = useState('Aberto')
     const [complement, setComplement] = useState('')
 
+    const [loadingRegister, setLoadingRegister] = useState(false)
+    const [loadingCustomers, setLoadingCustomers] = useState(true)
+
 
     useEffect(() => {
-        async function fetchCustomers() {
-            setTextOption('Nome fantasia')
-
-            await firebase.firestore().collection('customers').get()
-
-                .then((snapshot) => {
-                    let customers = []
-
-                    snapshot.forEach(doc => {
-                        customers.push(doc.data().NomeDaEmpresa)
-                    })
-
-                    setNameCustomers(customers)
-                })
-
-                .catch(error => console.log(error))
-        }
-
-        async function fetchInfoCall() {
-            await firebase.firestore().collection('calls').doc(callId).get()
-
-                .then(doc => {
-                    setTextOption(doc.data().cliente)
-                    setSubject(doc.data().assunto)
-                    setStats(doc.data().status)
-                    setComplement(doc.data().complemento)
-                })
-
-                .catch(error => console.log(error))
-        }
-
-        if (callId) fetchInfoCall()
-        else fetchCustomers()
-
+        if (callId) loadInfoCall()
+        else loadCustomers()
+        // eslint-disable-next-line
     }, [])
 
+    async function loadCustomers() {
+
+        setLoadingCustomers(true)
+
+        await firebase.firestore().collection('customers').get()
+
+            .then((snapshot) => {
+                let customers = []
+
+                snapshot.forEach(doc => {
+                    customers.push(doc.data().NomeDaEmpresa)
+                })
+
+                if (customers.length === 0) {
+                    toast.info('Nenhuma empresa encontrada!\nCadastre sua empresa na página de "Clientes".')
+                    setCustomers(['Nome fantasia'])
+                    return
+                }
+
+                setCustomers(customers)
+            })
+
+            .catch(error => {
+                setLoadingCustomers(false)
+                setCustomers(['Error'])
+                console.log(error)
+            })
+    }
+
+    async function loadInfoCall() {
+        await firebase.firestore().collection('calls').doc(callId).get()
+
+            .then(doc => {
+                setCustomers([doc.data().cliente])
+                setSubject(doc.data().assunto)
+                setStats(doc.data().status)
+                setComplement(doc.data().complemento)
+            })
+
+            .catch(error => console.log(error))
+    }
 
     async function handleRegister(e) {
         e.preventDefault()
 
+        setLoadingRegister(true)
+
         await firebase.firestore().collection('calls').doc().set({
             criadoEm: new Date().toLocaleDateString('UTC'),
-            cliente: textOption,
+            cliente: customers[customerSelected],
             assunto: subject,
             status: stats,
             complemento: complement ? complement : ''
         })
 
-            .then(() => toast.success("Chamado registrado com sucesso!"))
+            .then(() => {
+                setLoadingRegister(false)
+                history.push('/dashboard')
+                toast.success("Chamado registrado com sucesso!")
+            })
 
             .catch(error => {
+                setLoadingRegister(false)
                 toast.error("Ops algo deu errado!")
                 console.log(error)
             })
@@ -90,6 +113,8 @@ export default function NewCall() {
     async function handleUpdate(e) {
         e.preventDefault()
 
+        setLoadingRegister(true)
+
         await firebase.firestore().collection('calls').doc(callId)
             .update({
                 assunto: subject,
@@ -97,12 +122,23 @@ export default function NewCall() {
                 complemento: complement
             })
 
-            .then(() => toast.success("Dados atualizados com sucesso!"))
+            .then(() => {
+                setLoadingRegister(false)
+                history.push('/dashboard')
+                toast.success("Dados atualizados com sucesso!")
+            })
 
             .catch(error => {
+                setLoadingRegister(false)
                 toast.error("Ops algo deu errado!")
                 console.log(error)
             })
+    }
+
+    function handleChangeCustomer(e) {
+        const index = e.target.value
+
+        setCustomerSelected(index)
     }
 
 
@@ -128,11 +164,13 @@ export default function NewCall() {
                 <Form onSubmit={callId ? handleUpdate : handleRegister}>
 
                     <Label>Cliente</Label>
-                    <select onChange={(e) => setTextOption(e.target.value)} disabled={callId}>
-                        <option value={textOption}>{textOption}</option>
-
-                        {nameCustomers.map((name, index) =>
-                            <option key={index} value={name}>{name}</option>
+                    <select
+                        onChange={handleChangeCustomer}
+                        value={customerSelected}
+                        disabled={callId}
+                    >
+                        {customers.map((item, index) =>
+                            <option key={index} value={index}>{item}</option>
                         )}
                     </select>
 
@@ -200,9 +238,15 @@ export default function NewCall() {
                     </textarea>
 
 
-                    <Button type='submit'>
-                        {callId === undefined ? 'Registrar' : 'Atualizar'}
-                    </Button>
+                    {loadingRegister ?
+                        <Button type='button'>
+                            <Loading />
+                        </Button>
+                        :
+                        <Button type='submit'>
+                            {callId === undefined ? 'Registrar' : 'Atualizar'}
+                        </Button>
+                    }
                 </Form>
 
             </Content>

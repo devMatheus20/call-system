@@ -11,7 +11,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <ToastContainer autoClose={3000} theme={'dark'}/>
+        <ToastContainer autoClose={3500} theme={'dark'}/>
         <Routes />
       </BrowserRouter>
       <GlobalStyles />

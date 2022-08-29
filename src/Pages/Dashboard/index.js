@@ -18,13 +18,11 @@ export default function Dashboard() {
     const [callDetails, setCallDetails] = useState(null)
 
     const [boolean, setBoolean] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const history = useHistory()
 
     useEffect(() => {
-
-        setLoading(true)
 
         async function fetchCalleds() {
             firebase.firestore().collection('calls').orderBy('criadoEm', 'desc')
@@ -94,7 +92,7 @@ export default function Dashboard() {
 
                 {calleds.length === 0 ?
                     <S.InfoCalled>
-                        <span>Nenhum chamado registrado</span>
+                        <span>Nenhum chamado registrado!</span>
                         <Link to="/newcall" className='new-call'>
                             <HiPlusSm size={25} color="#fff" />
                             Novo chamado
