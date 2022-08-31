@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 
-export const InfoCalled = styled.div `
+export const InfoCalled = styled.div`
     background-color: #F8F8F8;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@ export const InfoCalled = styled.div `
     gap: 30px;
     width: 100%;
     margin: 15px auto;
-    padding: 60px 0;
+    padding: 50px 0;
     border-radius: 6px;
 
     span {
@@ -22,7 +22,7 @@ export const InfoCalled = styled.div `
 export const Table = styled.table`
     border: 1px solid #ccc;
     border-collapse: collapse;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
     padding: 0;
     width: 100%;
     table-layout: fixed;
@@ -83,6 +83,24 @@ export const Table = styled.table`
                 transform: scale(1.2);
             }
         }
+    }
+`
+
+export const ButtonMore = styled.button`
+    background-color: #181c2e;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    
+    :hover {
+        filter: brightness(1.5);
+    }
+
+    :active {
+        opacity: 0.8;
     }
 `
 

@@ -14,41 +14,96 @@ import Modal from '../../Components/Modal'
 
 export default function Dashboard() {
 
+    const history = useHistory()
+
     const [calleds, setCalleds] = useState([])
     const [callDetails, setCallDetails] = useState(null)
 
     const [boolean, setBoolean] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loadingCalleds, setLoadingCalleds] = useState(true)
+    const [loadingMore, setLoadingMore] = useState(false)
+    const [isEmpty, setIsEmpty] = useState(false)
+    const [lastDocs, setLastDocs] = useState()
 
-    const history = useHistory()
+    const listRef = firebase.firestore().collection('calls').orderBy('criadoEm', 'desc')
+
 
     useEffect(() => {
 
-        async function fetchCalleds() {
-            firebase.firestore().collection('calls').orderBy('criadoEm', 'desc')
-                .onSnapshot((snapshot) => {
-                    let calls = []
+        async function loadCalleds() {
 
-                    snapshot.forEach((doc) => {
-                        calls.push({
-                            id: doc.id,
-                            created: doc.data().criadoEm,
-                            client: doc.data().cliente,
-                            subject: doc.data().assunto,
-                            stats: doc.data().status,
-                            complement: doc.data().complemento
-                        })
-                    })
+            listRef.limit(5).get()
 
-                    setCalleds(calls)
-                    setLoading(false)
+                .then((snapshot) => {
+                    updateState(snapshot)
                 })
+
+                .catch(error => {
+                    setLoadingMore(false)
+                    console.log(error)
+                })
+
+            setLoadingCalleds(false)
         }
 
-        fetchCalleds()
+        loadCalleds()
     }, [])
 
+
+    function updateState(snapshot) {
+        
+        const isCollectionEmpty = snapshot.size === 0
+
+        if (!isCollectionEmpty) {
+            let calls = []
+
+            snapshot.forEach((doc) => {
+                calls.push({
+                    id: doc.id,
+                    created: doc.data().criadoEm,
+                    client: doc.data().cliente,
+                    clietId: doc.data().clienteId,
+                    subject: doc.data().assunto,
+                    stats: doc.data().status,
+                    complement: doc.data().complemento,
+                    userId: doc.data().userId
+                })
+            })
+
+            const lastDoc = snapshot.docs[snapshot.docs.length - 1]
+
+
+            setCalleds(calleds => [...calleds, ...calls])
+            setLastDocs(lastDoc)
+
+        } else {
+            setIsEmpty(true)
+        }
+
+        setLoadingMore(false)
+    }
+
+
+    async function handleMore() {
+        setLoadingMore(true)
+
+        await listRef.startAfter(lastDocs).limit(5).get()
+
+        .then((snapshot) => {
+            updateState(snapshot)
+        })
+
+        .catch(error => {
+            console.log(error)
+        })
+
+        setLoadingMore(false)
+    }
+
+
     function togglePostModal(call) {
+
+        setBoolean(!boolean)
 
         setCallDetails({
             client: call.client,
@@ -58,10 +113,10 @@ export default function Dashboard() {
             complement: call.complement
         })
 
-        setBoolean(!boolean)
     }
 
-    if (loading) {
+
+    if (loadingCalleds) {
         return (
             <div className='flex'>
                 <Header />
@@ -107,46 +162,52 @@ export default function Dashboard() {
                 }
 
                 {calleds.length > 0 &&
-                    <S.Table>
-                        <thead>
-                            <tr>
-                                <th scope='col'>Cliente</th>
-                                <th scope='col'>Assunto</th>
-                                <th scope='col'>Status</th>
-                                <th scope='col'>Cadastrado em</th>
-                                <th scope='col'>#</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {calleds.map((call) =>
-                                <tr key={call.id}>
-                                    <td data-label="Cliente">{call.client}</td>
-                                    <td data-label="Assunto">{call.subject}</td>
-                                    <td data-label="Status">
-                                        <span
-                                            style={{ backgroundColor: call.stats === "Em aberto" ? "#5cb85b" : "#999" }}
-                                            className="badge"
-                                        >
-                                            {call.stats}
-                                        </span>
-                                    </td>
-                                    <td data-label="Cadastrado em">{call.created}</td>
-                                    <td data-label="#" className='actions'>
-                                        <button className='search'>
-                                            <BiSearch
-                                                color='#fff'
-                                                size={20}
-                                                onClick={() => togglePostModal(call)} />
-                                        </button>
-                                        <button className='edit' onClick={() => history.push(`/newcall/${call.id}`)}>
-                                            <BiEditAlt color='#fff' size={20} />
-                                        </button>
-                                    </td>
+                    <>
+                        <S.Table>
+                            <thead>
+                                <tr>
+                                    <th scope='col'>Cliente</th>
+                                    <th scope='col'>Assunto</th>
+                                    <th scope='col'>Status</th>
+                                    <th scope='col'>Cadastrado em</th>
+                                    <th scope='col'>#</th>
                                 </tr>
-                            )}
-                        </tbody>
-                    </S.Table>
+                            </thead>
+                            <tbody>
+                                {calleds.map((call) =>
+                                    <tr key={call.id}>
+                                        <td data-label="Cliente">{call.client}</td>
+                                        <td data-label="Assunto">{call.subject}</td>
+                                        <td data-label="Status">
+                                            <span
+                                                style={{ backgroundColor: call.stats === "Em aberto" ? "#5cb85b" : "#999" }}
+                                                className="badge"
+                                            >
+                                                {call.stats}
+                                            </span>
+                                        </td>
+                                        <td data-label="Cadastrado em">{call.created}</td>
+                                        <td data-label="#" className='actions'>
+                                            <button className='search'>
+                                                <BiSearch
+                                                    color='#fff'
+                                                    size={20}
+                                                    onClick={() => togglePostModal(call)} />
+                                            </button>
+                                            <button className='edit' onClick={() => history.push(`/newcall/${call.id}`)}>
+                                                <BiEditAlt color='#fff' size={20} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </S.Table>
+
+                        {loadingMore && <h4 style={{ textAlign: 'center', marginTop: '20px' }}>Buscando dados...</h4>}
+                        {!loadingMore && !isEmpty && <S.ButtonMore onClick={handleMore}>Buscar mais</S.ButtonMore>}
+                    </>
                 }
+
 
                 {boolean && <Modal content={callDetails} close={togglePostModal} />}
 

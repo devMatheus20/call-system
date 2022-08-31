@@ -81,7 +81,11 @@ export default function Profile() {
                     })
             })
 
-            .catch(error => console.log(error))
+            .catch(error => {
+                setLoading(false)
+                toast.error("Ops, algo deu errado!")
+                console.log(error)
+            })
     }
 
 
@@ -108,6 +112,7 @@ export default function Profile() {
 
                 .catch(error => {
                     toast.error("Ops, algo deu errado!")
+                    setLoading(false)
                     console.log(error)
                 })
         }

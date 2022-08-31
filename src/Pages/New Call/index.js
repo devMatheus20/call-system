@@ -52,7 +52,10 @@ export default function NewCall() {
                 let customers = []
 
                 snapshot.forEach(doc => {
-                    customers.push(doc.data().NomeDaEmpresa)
+                    customers.push({
+                        id: doc.id,
+                        name: doc.data().NomeDaEmpresa,
+                    })
                 })
 
                 if (customers.length === 0) {
@@ -62,6 +65,7 @@ export default function NewCall() {
                 }
 
                 setCustomers(customers)
+                setLoadingCustomers(false)
             })
 
             .catch(error => {
@@ -72,16 +76,23 @@ export default function NewCall() {
     }
 
     async function loadInfoCall() {
+
+        setLoadingCustomers(true)
+
         await firebase.firestore().collection('calls').doc(callId).get()
 
             .then(doc => {
-                setCustomers([doc.data().cliente])
+                setCustomers([{ id: doc.id, name: doc.data().cliente }])
                 setSubject(doc.data().assunto)
                 setStats(doc.data().status)
                 setComplement(doc.data().complemento)
+                setLoadingCustomers(false)
             })
 
-            .catch(error => console.log(error))
+            .catch(error => {
+                setLoadingCustomers(false)
+                console.log(error)
+            })
     }
 
     async function handleRegister(e) {
@@ -89,12 +100,14 @@ export default function NewCall() {
 
         setLoadingRegister(true)
 
-        await firebase.firestore().collection('calls').doc().set({
+        await firebase.firestore().collection('calls').add({
             criadoEm: new Date().toLocaleDateString('UTC'),
-            cliente: customers[customerSelected],
+            cliente: customers[customerSelected].name,
+            clienteId: customers[customerSelected].id,
             assunto: subject,
             status: stats,
-            complemento: complement ? complement : ''
+            complemento: complement ? complement : '',
+            userId: user.uid
         })
 
             .then(() => {
@@ -143,6 +156,7 @@ export default function NewCall() {
 
 
     return (
+        console.log(customers),
         <div className='flex'>
 
             <Header />
@@ -164,15 +178,24 @@ export default function NewCall() {
                 <Form onSubmit={callId ? handleUpdate : handleRegister}>
 
                     <Label>Cliente</Label>
-                    <select
-                        onChange={handleChangeCustomer}
-                        value={customerSelected}
-                        disabled={callId}
-                    >
-                        {customers.map((item, index) =>
-                            <option key={index} value={index}>{item}</option>
-                        )}
-                    </select>
+                    {loadingCustomers ?
+                        <input
+                            className='disabled'
+                            type="text"
+                            value='Carregando...'
+                            disabled
+                        />
+                        :
+                        <select
+                            onChange={handleChangeCustomer}
+                            value={customerSelected}
+                            disabled={callId}
+                        >
+                            {customers.map((item, index) =>
+                                <option key={index} value={index}>{item.name}</option>
+                            )}
+                        </select>
+                    }
 
 
                     <Label>Assunto</Label>
