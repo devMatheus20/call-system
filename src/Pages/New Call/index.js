@@ -60,7 +60,7 @@ export default function NewCall() {
 
                 if (customers.length === 0) {
                     toast.info('Nenhuma empresa encontrada!\nCadastre sua empresa na página de "Clientes".')
-                    setCustomers(['Nome fantasia'])
+                    setCustomers([{ id: 1, name: 'Nome fantasia' }])
                     return
                 }
 
@@ -70,7 +70,7 @@ export default function NewCall() {
 
             .catch(error => {
                 setLoadingCustomers(false)
-                setCustomers(['Error'])
+                setCustomers([{ id: 0, name: 'Error' }])
                 console.log(error)
             })
     }
