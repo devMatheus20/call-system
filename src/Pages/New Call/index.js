@@ -61,6 +61,7 @@ export default function NewCall() {
                 if (customers.length === 0) {
                     toast.info('Nenhuma empresa encontrada!\nCadastre sua empresa na página de "Clientes".')
                     setCustomers([{ id: 1, name: 'Nome fantasia' }])
+                    setLoadingCustomers(false)
                     return
                 }
 
