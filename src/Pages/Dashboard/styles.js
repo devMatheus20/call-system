@@ -88,6 +88,7 @@ export const Table = styled.table`
 
 export const ButtonMore = styled.button`
     background-color: #181c2e;
+    margin-bottom: 30px;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;

@@ -30,24 +30,29 @@ export default function Dashboard() {
 
     useEffect(() => {
 
-        async function loadCalleds() {
-
-            listRef.limit(5).get()
-
-                .then((snapshot) => {
-                    updateState(snapshot)
-                })
-
-                .catch(error => {
-                    setLoadingMore(false)
-                    console.log(error)
-                })
-
-            setLoadingCalleds(false)
-        }
-
         loadCalleds()
+
+        return () => {
+
+        }
+        // eslint-disable-next-line 
     }, [])
+
+    async function loadCalleds() {
+
+        listRef.limit(5).get()
+
+            .then((snapshot) => {
+                updateState(snapshot)
+                setLoadingCalleds(false)
+            })
+
+            .catch(error => {
+                setLoadingMore(false)
+                setLoadingCalleds(false)
+                console.log(error)
+            })
+    }
 
 
     function updateState(snapshot) {
@@ -118,6 +123,7 @@ export default function Dashboard() {
 
     if (loadingCalleds) {
         return (
+            console.log("cheguei aqui"),
             <div className='flex'>
                 <Header />
 
