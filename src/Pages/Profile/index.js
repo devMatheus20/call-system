@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import * as S from './styles.js'
 
 import firebase from '../../Services/firebaseConnection'
@@ -18,11 +18,12 @@ import Logout from '../../Components/Logout/'
 import Loading from '../../Components/Loading'
 
 export default function Profile() {
-
+    // eslint-disable-next-line
     const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
     const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
     const [name, setName] = useState(user && user.nome)
+    // eslint-disable-next-line
     const [email, setEmail] = useState(user && user.email)
 
     const [inputImage, setInputImage] = useState(null)
@@ -51,6 +52,7 @@ export default function Profile() {
 
         setLoading(true)
 
+        // eslint-disable-next-line
         const uploadTask = firebase.storage()
             .ref(`images/${user.uid}/${inputImage.name}`)
             .put(inputImage)
