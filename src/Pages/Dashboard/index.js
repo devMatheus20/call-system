@@ -123,7 +123,6 @@ export default function Dashboard() {
 
     if (loadingCalleds) {
         return (
-            console.log("cheguei aqui"),
             <div className='flex'>
                 <Header />
 
@@ -180,8 +179,8 @@ export default function Dashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {calleds.map((call) =>
-                                    <tr key={call.id}>
+                                {calleds.map((call, index) =>
+                                    <tr key={index}>
                                         <td data-label="Cliente">{call.client}</td>
                                         <td data-label="Assunto">{call.subject}</td>
                                         <td data-label="Status">
@@ -193,7 +192,7 @@ export default function Dashboard() {
                                             </span>
                                         </td>
                                         <td data-label="Cadastrado em">{call.created}</td>
-                                        <td data-label="#" className='actions'>
+                                        <td data-label="#">
                                             <button className='search'>
                                                 <BiSearch
                                                     color='#fff'

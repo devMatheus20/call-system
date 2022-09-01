@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Form = styled.form`
-    background-color: #0B0A17;
+    background-color: #0c0b1c;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +11,10 @@ export const Form = styled.form`
     padding: 10px;
     border-radius: 0.7rem;
 
+    @media screen and (max-width:650px) {
+        width: 90%;
+        min-width: 350px;
+    }
 
     input {
         background-color: #242A45;

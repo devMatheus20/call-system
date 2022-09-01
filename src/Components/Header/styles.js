@@ -8,8 +8,9 @@ export const SideBar = styled.header`
     min-width: 200px;
     min-height: 100vh;
 
-    @media(max-width: 700px) {
+    @media screen and (max-width: 900px) {
         min-height: auto;
+        max-width: none; 
         width: 100%;
     }
 `
@@ -23,6 +24,10 @@ export const ImageUser = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     height: 150px;
+
+    @media screen and (max-width: 900px) {
+        display: none;
+    }
  
     img {
         width: 90px;
@@ -32,14 +37,14 @@ export const ImageUser = styled.div`
         object-fit: cover;
     }
 
-    @media(max-width: 700px) {
-        display: none;
-    }
-
 `
 export const Links = styled.div`
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 900px) {
+        flex-direction: row;
+    }
 
     a {
         display: flex;
@@ -56,17 +61,20 @@ export const Links = styled.div`
             color: #fff;
         }
 
+        @media screen and (max-width: 900px) {
+            :hover {
+                background-color: transparent;
+                color: #fff;
+            }
+        }
+
         svg {
 
-            @media(max-width: 700px) {
+            @media screen and (max-width: 900px) {
                 display: none;
             }
 
         }
-    }
-
-    @media(max-width: 700px) {
-        flex-direction: row;
     }
 `
 

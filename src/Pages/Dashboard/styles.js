@@ -27,9 +27,30 @@ export const Table = styled.table`
     width: 100%;
     table-layout: fixed;
 
+    
+
+    thead {
+        @media screen and (max-width: 660px) {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+    }
+
     tr {
         background-color: #F8F8F8;
         border: 1.2px solid #ddd;
+
+        @media screen and (max-width: 660px) {
+            border-bottom: 3px solid #DDD;
+            display: block;
+            margin-bottom: .65em;
+        }
     }
 
     th, td {
@@ -48,22 +69,28 @@ export const Table = styled.table`
         font-size: 14px;
         padding: 10px;
         overflow: hidden;
+
+        @media screen and (max-width: 660px) {
+            border-bottom: 1px solid #DDD;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+
+            :last-child {border-bottom: 0;}
+
+            :before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
     }
 
-    .actions {
-        display: flex;
-        justify-content: center;
-
-        button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .search {
             padding: 4px;
             border: none;
             border-radius: 5px;
-        }
-
-        .search {
             background-color: #3583F6;
             margin-right: 7px;
             cursor: pointer;
@@ -72,9 +99,12 @@ export const Table = styled.table`
             :hover {
                 transform: scale(1.2);
             }
-        }
+    }
 
-        .edit {
+    .edit {
+            padding: 4px;
+            border: none;
+            border-radius: 5px;
             background-color: #F6A935;
             cursor: pointer;
             transition: 0.3s;
@@ -82,7 +112,6 @@ export const Table = styled.table`
             :hover {
                 transform: scale(1.2);
             }
-        }
     }
 `
 

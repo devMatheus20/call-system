@@ -9,37 +9,49 @@ export const Form = styled.form`
     padding-left: 11px;
     padding-bottom: 20px;
     border-radius: 6px;
-
+    
     input[type=text] {
         display: block;
-        width: 46%;
+        width: 595px;
         padding: 9px;
         margin-top: 5px;
         border: 1px solid #ccc;
         border-radius: 0.3rem;
         outline: none;
+
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
     }
 
     select {
         display: block;
-        width: 46%;
+        width: 595px;
         padding: 9px;
         margin-top: 5px;
         border: 1px solid #ccc;
         border-radius: 0.3rem;
         outline: none;
+
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
     }
 
     textarea {
         display: block;
         height: 120px;
-        width: 46%;
+        width: 595px;
         padding: 9px;
         margin-top: 5px;
         border: 1px solid #ccc;
         border-radius: 0.3rem;
         outline: none;
         resize: none;
+
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
     }
 `
 

@@ -14,8 +14,16 @@ const GlobalStyles = createGlobalStyle`
         height: 100%;
     }
 
+    body {
+        background-color: hsl(0, 0%, 94%);
+    }
+
     .flex {
         display: flex;
+
+        @media screen and (max-width: 900px) {
+            flex-direction: column;
+        }
     }
 
     .margin {

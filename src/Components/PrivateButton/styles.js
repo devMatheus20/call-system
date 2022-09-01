@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Button = styled.button`
     background-color: #181C2E;
     max-height: 36px;
-    width: 46%;
+    width: 595px;
     margin-top: 30px;
     padding: 8px 0;
     color: #fff;
@@ -20,5 +20,9 @@ export const Button = styled.button`
 
     :active {
         opacity: 0.7;
+    }
+
+    @media screen and (max-width: 700px) {
+        width: 90%;
     }
 `

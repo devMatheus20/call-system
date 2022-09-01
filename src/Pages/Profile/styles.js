@@ -27,7 +27,7 @@ export const ImageProfile = styled.div `
 
     svg {
         position: relative;
-        bottom: 125px;
+        bottom: 120px;
         right: 134px;
         opacity: 0.7;
         cursor: pointer;
