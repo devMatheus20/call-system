@@ -22,6 +22,26 @@ No projeto foram utilizadas as seguintes tecnologias:
 - [Styled Components](https://styled-components.com)
 
 
+## 📕 Como usar
+
+Antes de iniciar, você precisa ter [ Git ](https://git-scm.com) e [ Node ](https://nodejs.org/en/) instalado.
+
+```bash
+# Clone this project
+$ git clone https://github.com/devMatheus20/call-system
+
+# Access
+$ cd call-system
+
+#Install dependencies
+$ yarn ou npm
+
+# Run the project
+$ yarn start ou npm start
+
+# O servidor irá inicializar no <http://localhost:3000>
+```
+
 ## 🤝 Colaboradores
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
